@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31829.152
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RocketForms", "RocketForms.csproj", "{B5E059D8-6274-4271-B6EC-029388C9679D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RocketContent", "..\RocketContent\RocketContent.csproj", "{5B78C990-E10B-4CDB-8D07-0517140E73C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNNrocketAPI", "..\..\DNNrocket\API\DNNrocketAPI.csproj", "{2200F6C3-7D4B-4CDF-908F-DCA37ADFB121}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simplisity", "..\..\DNNrocket\Simplisity\Simplisity.csproj", "{E6601034-0C90-4404-AF7A-6AE2489773F9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RocketPortal", "..\..\DNNrocket\RocketPortal\RocketPortal.csproj", "{0B414E5E-2840-4160-961D-65252245D507}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Comp All|Any CPU = Comp All|Any CPU
+		CompAll|Any CPU = CompAll|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Razor|Any CPU = Razor|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B5E059D8-6274-4271-B6EC-029388C9679D}.Comp All|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5E059D8-6274-4271-B6EC-029388C9679D}.Comp All|Any CPU.Build.0 = Debug|Any CPU
+		{B5E059D8-6274-4271-B6EC-029388C9679D}.CompAll|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5E059D8-6274-4271-B6EC-029388C9679D}.CompAll|Any CPU.Build.0 = Debug|Any CPU
+		{B5E059D8-6274-4271-B6EC-029388C9679D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5E059D8-6274-4271-B6EC-029388C9679D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5E059D8-6274-4271-B6EC-029388C9679D}.Razor|Any CPU.ActiveCfg = Release|Any CPU
+		{B5E059D8-6274-4271-B6EC-029388C9679D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5E059D8-6274-4271-B6EC-029388C9679D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B78C990-E10B-4CDB-8D07-0517140E73C7}.Comp All|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B78C990-E10B-4CDB-8D07-0517140E73C7}.Comp All|Any CPU.Build.0 = Debug|Any CPU
+		{5B78C990-E10B-4CDB-8D07-0517140E73C7}.CompAll|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B78C990-E10B-4CDB-8D07-0517140E73C7}.CompAll|Any CPU.Build.0 = Debug|Any CPU
+		{5B78C990-E10B-4CDB-8D07-0517140E73C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B78C990-E10B-4CDB-8D07-0517140E73C7}.Razor|Any CPU.ActiveCfg = Release|Any CPU
+		{5B78C990-E10B-4CDB-8D07-0517140E73C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2200F6C3-7D4B-4CDF-908F-DCA37ADFB121}.Comp All|Any CPU.ActiveCfg = Comp All|Any CPU
+		{2200F6C3-7D4B-4CDF-908F-DCA37ADFB121}.Comp All|Any CPU.Build.0 = Comp All|Any CPU
+		{2200F6C3-7D4B-4CDF-908F-DCA37ADFB121}.CompAll|Any CPU.ActiveCfg = CompAll|Any CPU
+		{2200F6C3-7D4B-4CDF-908F-DCA37ADFB121}.CompAll|Any CPU.Build.0 = CompAll|Any CPU
+		{2200F6C3-7D4B-4CDF-908F-DCA37ADFB121}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2200F6C3-7D4B-4CDF-908F-DCA37ADFB121}.Razor|Any CPU.ActiveCfg = Razor|Any CPU
+		{2200F6C3-7D4B-4CDF-908F-DCA37ADFB121}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6601034-0C90-4404-AF7A-6AE2489773F9}.Comp All|Any CPU.ActiveCfg = Comp All|Any CPU
+		{E6601034-0C90-4404-AF7A-6AE2489773F9}.Comp All|Any CPU.Build.0 = Comp All|Any CPU
+		{E6601034-0C90-4404-AF7A-6AE2489773F9}.CompAll|Any CPU.ActiveCfg = CompAll|Any CPU
+		{E6601034-0C90-4404-AF7A-6AE2489773F9}.CompAll|Any CPU.Build.0 = CompAll|Any CPU
+		{E6601034-0C90-4404-AF7A-6AE2489773F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6601034-0C90-4404-AF7A-6AE2489773F9}.Razor|Any CPU.ActiveCfg = Razor|Any CPU
+		{E6601034-0C90-4404-AF7A-6AE2489773F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B414E5E-2840-4160-961D-65252245D507}.Comp All|Any CPU.ActiveCfg = Comp All|Any CPU
+		{0B414E5E-2840-4160-961D-65252245D507}.Comp All|Any CPU.Build.0 = Comp All|Any CPU
+		{0B414E5E-2840-4160-961D-65252245D507}.CompAll|Any CPU.ActiveCfg = CompAll|Any CPU
+		{0B414E5E-2840-4160-961D-65252245D507}.CompAll|Any CPU.Build.0 = CompAll|Any CPU
+		{0B414E5E-2840-4160-961D-65252245D507}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B414E5E-2840-4160-961D-65252245D507}.Razor|Any CPU.ActiveCfg = Release|Any CPU
+		{0B414E5E-2840-4160-961D-65252245D507}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1672CE09-604A-4574-B9FF-29457AEF026B}
+	EndGlobalSection
+EndGlobal
