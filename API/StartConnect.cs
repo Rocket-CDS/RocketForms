@@ -4,6 +4,7 @@ using Simplisity;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace RocketForms.API
@@ -80,7 +81,7 @@ namespace RocketForms.API
             // Get list of forms from Directory
             var formlist = new List<SimplisityRecord>();
             var folderPath = PortalUtils.HomeDirectoryMapPath() + "\\RocketForms\\" + moduleRef;
-            var l = Directory.GetFiles(folderPath);
+            var l = Directory.GetFiles(folderPath).OrderByDescending(i => i);
             foreach (var f in l)
             {
                 var fData = GeneralUtils.Base64Decode(FileUtils.ReadFile(f));
@@ -121,13 +122,13 @@ namespace RocketForms.API
             // remove any hack injection
             var dList = _postInfo.ToDictionary();
             var rtnRecord = new SimplisityRecord();
-            rtnRecord.ModifiedDate = DateTime.Now;
+            rtnRecord.SetXmlProperty("genxml/data/createddate", DateTime.Now.ToString("O"),TypeCode.DateTime);
             foreach (var d in dList)
             {
                 var strText = d.Value;
                 strText = System.Web.HttpUtility.HtmlEncode(strText);
-                strText = strText.Replace("&gt;", "");
-                strText = strText.Replace("&lt;", "");
+                strText = strText.Replace("&gt;", "-");
+                strText = strText.Replace("&lt;", "-");
                 rtnRecord.SetXmlProperty("genxml/data/" + d.Key, strText); 
             }
             var filename = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss").Replace(" ", "") + "_" + GeneralUtils.GetGuidKey();
