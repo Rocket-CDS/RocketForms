@@ -1,4 +1,5 @@
 ﻿using DNNrocketAPI.Components;
+using RocketContent.Components;
 using RocketForms.Components;
 using Simplisity;
 using System;
@@ -136,14 +137,30 @@ namespace RocketForms.API
             var dataSave = GeneralUtils.Base64Encode(rtnRecord.ToXmlItem());
             FileUtils.SaveFile(folderPath + "\\" + filename, dataSave);
 
-            //[TODO: SEND EMAIL] 
-
-
+            var portalContent = new PortalContentLimpet(portalid, _sessionParams.CultureCodeEdit); // Portal 0 is admin, editing portal setup
 
             var dataObjects = new Dictionary<string, object>();
             dataObjects.Add("remotemodule", remoteModule);
+            dataObjects.Add("portalcontent", portalContent);
+
+            var razorTemplEmail = appTheme.GetTemplate("EmailForm.cshtml");
+            var pr = RenderRazorUtils.RazorProcessData(razorTemplEmail, new SimplisityInfo(rtnRecord), dataObjects, null, _sessionParams, true);
+            if (pr.StatusCode != "00") LogUtils.LogSystem("ERROR - RocketForms Email: " + pr.ErrorMsg);
+            if (portalContent.DebugMode)
+            {
+                var emailfilename = PortalUtils.TempDirectoryMapPath() + "\\rocketforms_email.html";
+                if (pr.StatusCode != "00")
+                    FileUtils.SaveFile(emailfilename, pr.ErrorMsg);
+                else
+                    FileUtils.SaveFile(emailfilename, pr.RenderedText);
+            }
+            if (portalContent.EmailOn && pr.StatusCode == "00" && remoteModule.Record.GetXmlPropertyBool("genxml/checkbox/emailon"))
+            {
+                var eFunc = new EmailLimpet(portalid, _sessionParams.CultureCode);
+                eFunc.SendEmail(pr.RenderedText, remoteModule.Record.GetXmlProperty("genxml/textbox/fromemail"), rtnRecord.GetXmlProperty("genxml/data/email"), remoteModule.Record.GetXmlProperty("genxml/textbox/replytoemail"), remoteModule.Record.GetXmlProperty("genxml/textbox/subject"));
+            }
             var razorTempl = appTheme.GetTemplate("SentMessage.cshtml");
-            var pr = RenderRazorUtils.RazorProcessData(razorTempl, _postInfo, dataObjects, null, _sessionParams, true);
+            pr = RenderRazorUtils.RazorProcessData(razorTempl, _postInfo, dataObjects, null, _sessionParams, true);
             if (pr.StatusCode != "00") return pr.ErrorMsg;
             return pr.RenderedText;
         }
