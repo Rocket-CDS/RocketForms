@@ -15,9 +15,11 @@ namespace RocketForms.API
         private SimplisityInfo _postInfo;
         private SimplisityInfo _paramInfo;
         private SessionParams _sessionParams;
+        private int _portalId;
         public override Dictionary<string, object> ProcessCommand(string paramCmd, SimplisityInfo systemInfo, SimplisityInfo interfaceInfo, SimplisityInfo postInfo, SimplisityInfo paramInfo, string langRequired = "")
         {
             var strOut = "";
+            _portalId = PortalUtils.GetPortalId();
             _postInfo = postInfo;
             _paramInfo = paramInfo;
             _sessionParams = new SessionParams(_paramInfo);
@@ -56,7 +58,7 @@ namespace RocketForms.API
         {
             var moduleRef = _paramInfo.GetXmlProperty("genxml/remote/moduleref");
             var formref = _paramInfo.GetXmlProperty("genxml/hidden/formref");           
-            var fMapPath = PortalUtils.HomeDirectoryMapPath() + "\\RocketForms\\" + moduleRef + "\\" + formref;
+            var fMapPath = PortalUtils.HomeDirectoryMapPath(_portalId) + "\\RocketForms\\" + moduleRef + "\\" + formref;
             if (File.Exists(fMapPath)) File.Delete(fMapPath);
             return ListForm();
         }
@@ -64,7 +66,7 @@ namespace RocketForms.API
         {
             var moduleRef = _paramInfo.GetXmlProperty("genxml/remote/moduleref");
             var formref = _paramInfo.GetXmlProperty("genxml/hidden/formref");
-            var folderPath = PortalUtils.HomeDirectoryMapPath() + "\\RocketForms\\" + moduleRef;
+            var folderPath = PortalUtils.HomeDirectoryMapPath(_portalId) + "\\RocketForms\\" + moduleRef;
             var l = Directory.GetFiles(folderPath);
             foreach (var f in l)
             {
@@ -81,7 +83,7 @@ namespace RocketForms.API
 
             // Get list of forms from Directory
             var formlist = new List<SimplisityRecord>();
-            var folderPath = PortalUtils.HomeDirectoryMapPath() + "\\RocketForms\\" + moduleRef;
+            var folderPath = PortalUtils.HomeDirectoryMapPath(_portalId) + "\\RocketForms\\" + moduleRef;
             var l = Directory.GetFiles(folderPath).OrderByDescending(i => i);
             foreach (var f in l)
             {
@@ -118,7 +120,7 @@ namespace RocketForms.API
             var appTheme = new AppThemeLimpet(portalid, remoteModule.AppThemeViewFolder, remoteModule.AppThemeViewVersion, remoteModule.Organisation);
 
             //Save To DISK.  Save all post to disk (NOT DB, to stop SQL inject).  Also encode XML as Base64.
-            var folderPath = PortalUtils.HomeDirectoryMapPath() + "\\RocketForms\\" + moduleRef;
+            var folderPath = PortalUtils.HomeDirectoryMapPath(_portalId) + "\\RocketForms\\" + moduleRef;
             if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
             // remove any hack injection
             var dList = _postInfo.ToDictionary();
