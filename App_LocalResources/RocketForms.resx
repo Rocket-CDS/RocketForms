@@ -120,6 +120,9 @@
   <data name="company.Text" xml:space="preserve">
     <value>Company Name</value>
   </data>
+  <data name="contactname.Text" xml:space="preserve">
+    <value>Contact Name</value>
+  </data>
   <data name="email.Text" xml:space="preserve">
     <value>E-mail</value>
   </data>
@@ -138,6 +141,9 @@
   <data name="message.Text" xml:space="preserve">
     <value>Message</value>
   </data>
+  <data name="mobiletel.Text" xml:space="preserve">
+    <value>Mobile Tel.</value>
+  </data>
   <data name="name.Text" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -154,6 +160,6 @@
     <value>Subject</value>
   </data>
   <data name="tel.Text" xml:space="preserve">
-    <value>Tel</value>
+    <value>Tel.</value>
   </data>
 </root>
