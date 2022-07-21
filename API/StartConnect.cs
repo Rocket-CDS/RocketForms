@@ -39,6 +39,10 @@ namespace RocketForms.API
                     strOut = DeleteForm();
                     rtnDic.Add("outputhtml", strOut);
                     break;
+                case "remote_sendemail":
+                    strOut = SendEmail();
+                    rtnDic.Add("outputhtml", strOut);
+                    break;
                 case "remote_deleteall":
                     strOut = DeleteFormAll();
                     rtnDic.Add("outputhtml", strOut);
@@ -60,6 +64,17 @@ namespace RocketForms.API
             var formref = _paramInfo.GetXmlProperty("genxml/hidden/formref");           
             var fMapPath = PortalUtils.HomeDirectoryMapPath(_portalId) + "\\RocketForms\\" + moduleRef + "\\" + formref;
             if (File.Exists(fMapPath)) File.Delete(fMapPath);
+            return ListForm();
+        }
+        public string SendEmail()
+        {
+            var moduleRef = _paramInfo.GetXmlProperty("genxml/remote/moduleref");
+            var formref = _paramInfo.GetXmlProperty("genxml/hidden/formref");
+            var fMapPath = PortalUtils.HomeDirectoryMapPath(_portalId) + "\\RocketForms\\" + moduleRef + "\\" + formref;
+            if (File.Exists(fMapPath))
+            {
+                SendEmailForm(_portalId, fMapPath);
+            }
             return ListForm();
         }
         public string DeleteFormAll()
@@ -90,38 +105,7 @@ namespace RocketForms.API
                 var l = Directory.GetFiles(folderPath).OrderByDescending(i => i);
                 foreach (var f in l)
                 {
-                    var fData = FileUtils.ReadFile(f);
-                    var sRec = new SimplisityRecord();
-                    var sRecDecode = new SimplisityRecord();
-                    sRec.FromXmlItem(fData);
-                    var dList = sRec.ToDictionary();
-                    foreach (var d in dList)
-                    {
-                        var strText = d.Value;
-
-                        if (d.Key == "createddate")
-                        {
-                            sRecDecode.SetXmlProperty("genxml/" + d.Key, strText);
-                        }
-                        else if (d.Key.StartsWith("base64-"))
-                        {
-                            string[] b64split = strText.Split(new[] { '-', ',' });
-                            if (b64split.Length == 2)
-                            {
-                                sRecDecode.SetXmlProperty("genxml/" + d.Key + "meta", b64split[0]);
-                                sRecDecode.SetXmlProperty("genxml/" + d.Key + "value", b64split[1]);
-                            }
-                            sRecDecode.SetXmlProperty("genxml/" + d.Key, strText);
-                        }
-                        else
-                        { 
-                            strText = strText.Replace(Environment.NewLine, "<br/>");
-                            strText = strText.Replace("\n", "<br/>");
-                            strText = strText.Replace("\r", "<br/>");
-                            sRecDecode.SetXmlProperty("genxml/" + d.Key, GeneralUtils.Base64Decode(strText));
-                        }
-                    }
-                    sRec.XMLData = sRecDecode.XMLData;
+                    var sRec = ReadFileRecord(f);
                     formlist.Add(sRec);
                 }
                 var dataObjects = new Dictionary<string, object>();
@@ -153,6 +137,8 @@ namespace RocketForms.API
             var dList = _postInfo.ToDictionary();
             var rtnRecord = new SimplisityRecord();
             rtnRecord.SetXmlProperty("genxml/data/createddate", DateTime.Now.ToString("O"),TypeCode.DateTime);
+            rtnRecord.SetXmlProperty("genxml/data/portalalias", GeneralUtils.Base64Encode(PortalUtils.GetPortalAlias(_sessionParams.CultureCode)));
+
             foreach (var d in dList)
             {
                 if (d.Key.StartsWith("base64-"))
@@ -176,11 +162,83 @@ namespace RocketForms.API
 
             if (recordByteSize < 50000000) // 50MB limit
             {
-
-                FileUtils.SaveFile(folderPath + "\\" + filename, dataSave);
-
+                var fileMapPath = folderPath + "\\" + filename;
+                FileUtils.SaveFile(fileMapPath, dataSave);                
+                SendEmailForm(portalid, fileMapPath);
                 var portalContent = new PortalContentLimpet(portalid, _sessionParams.CultureCodeEdit); // Portal 0 is admin, editing portal setup
+                var dataObjects = new Dictionary<string, object>();
+                dataObjects.Add("remotemodule", remoteModule);
+                dataObjects.Add("portalcontent", portalContent);
+                var razorTempl = appTheme.GetTemplate("SentMessage.cshtml");
+                var pr = RenderRazorUtils.RazorProcessData(razorTempl, _postInfo, dataObjects, null, _sessionParams, true);
+                if (pr.StatusCode != "00") return pr.ErrorMsg;
+                return pr.RenderedText;
+            }
+            else
+            {
+                LogUtils.LogSystem("Email Limit Exceeded: " + folderPath + "\\" + filename);
+            }
+            return "Invalid record";
+        }
+        public SimplisityRecord ReadFileRecord(string fileMapPath)
+        {
+            var dataRecord = FileUtils.ReadFile(fileMapPath);
+            if (dataRecord == "") return null;
+            var rtnRecord = new SimplisityRecord();
+            rtnRecord.XMLData = dataRecord;
 
+            var fData = FileUtils.ReadFile(fileMapPath);
+            var sRec = new SimplisityRecord();
+            var sRecDecode = new SimplisityRecord();
+            sRec.FromXmlItem(fData);
+            var dList = sRec.ToDictionary();
+            foreach (var d in dList)
+            {
+                var strText = d.Value;
+
+                if (d.Key == "createddate")
+                {
+                    sRecDecode.SetXmlProperty("genxml/" + d.Key, strText);
+                }
+                else if (d.Key.StartsWith("base64-"))
+                {
+                    string[] b64split = strText.Split(new[] { '-', ',' });
+                    if (b64split.Length == 2)
+                    {
+                        sRecDecode.SetXmlProperty("genxml/" + d.Key + "meta", b64split[0]);
+                        sRecDecode.SetXmlProperty("genxml/" + d.Key + "value", b64split[1]);
+                    }
+                    sRecDecode.SetXmlProperty("genxml/" + d.Key, strText);
+                }
+                else
+                {
+                    try
+                    {
+                        strText = GeneralUtils.Base64Decode(strText);
+                        strText = strText.Replace(Environment.NewLine, "<br/>");
+                        strText = strText.Replace("\n", "<br/>");
+                        strText = strText.Replace("\r", "<br/>");
+                        sRecDecode.SetXmlProperty("genxml/" + d.Key, strText);
+                    }
+                    catch (Exception)
+                    {
+                        sRecDecode.SetXmlProperty("genxml/" + d.Key, "ERROR");
+                    }
+                }
+            }
+            sRec.XMLData = sRecDecode.XMLData;
+            return sRec;
+        }
+        public void SendEmailForm(int portalid, string fileMapPath)
+        {
+            var moduleRef = _paramInfo.GetXmlProperty("genxml/hidden/moduleref");
+            var remoteModule = new RemoteModule(portalid, moduleRef);
+            var appTheme = new AppThemeLimpet(portalid, remoteModule.AppThemeViewFolder, remoteModule.AppThemeViewVersion, remoteModule.Organisation);
+            var portalContent = new PortalContentLimpet(portalid, _sessionParams.CultureCodeEdit);
+
+            var rtnRecord = ReadFileRecord(fileMapPath);
+            if (rtnRecord != null)
+            {
                 var dataObjects = new Dictionary<string, object>();
                 dataObjects.Add("remotemodule", remoteModule);
                 dataObjects.Add("portalcontent", portalContent);
@@ -201,12 +259,7 @@ namespace RocketForms.API
                     var eFunc = new EmailLimpet(portalid, _sessionParams.CultureCode);
                     eFunc.SendEmail(pr.RenderedText, remoteModule.Record.GetXmlProperty("genxml/textbox/fromemail"), rtnRecord.GetXmlProperty("genxml/data/email"), remoteModule.Record.GetXmlProperty("genxml/textbox/replytoemail"), remoteModule.Record.GetXmlProperty("genxml/textbox/subject"));
                 }
-                var razorTempl = appTheme.GetTemplate("SentMessage.cshtml");
-                pr = RenderRazorUtils.RazorProcessData(razorTempl, _postInfo, dataObjects, null, _sessionParams, true);
-                if (pr.StatusCode != "00") return pr.ErrorMsg;
-                return pr.RenderedText;
             }
-            return "Invalid record";
         }
     }
 

@@ -123,6 +123,9 @@
   <data name="contactname.Text" xml:space="preserve">
     <value>Contact Name</value>
   </data>
+  <data name="editurl.Text" xml:space="preserve">
+    <value>Module Edit Url</value>
+  </data>
   <data name="email.Text" xml:space="preserve">
     <value>E-mail</value>
   </data>
