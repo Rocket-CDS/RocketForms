@@ -257,7 +257,7 @@ namespace RocketForms.API
                 if (portalContent.EmailOn && pr.StatusCode == "00" && remoteModule.Record.GetXmlPropertyBool("genxml/checkbox/emailon"))
                 {
                     var eFunc = new EmailLimpet(portalid, _sessionParams.CultureCode);
-                    eFunc.SendEmail(pr.RenderedText, remoteModule.Record.GetXmlProperty("genxml/textbox/fromemail"), rtnRecord.GetXmlProperty("genxml/data/email"), remoteModule.Record.GetXmlProperty("genxml/textbox/replytoemail"), remoteModule.Record.GetXmlProperty("genxml/textbox/subject"));
+                    eFunc.SendEmail(pr.RenderedText, remoteModule.Record.GetXmlProperty("genxml/textbox/fromemail"), remoteModule.Record.GetXmlProperty("genxml/textbox/manageremail"), remoteModule.Record.GetXmlProperty("genxml/textbox/replytoemail"), remoteModule.Record.GetXmlProperty("genxml/textbox/subject"));
                 }
             }
         }

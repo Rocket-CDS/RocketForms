@@ -36,6 +36,7 @@ namespace RocketForms.Components
             _emailData.EmailSubject = subject;
             _emailData.CultureCode = CultureCode;
             _emailData.EmailBody = emailBody;
+            _emailData.PortalId = PortalId;
 
             var emailSender = new EmailSender(_emailData);
             var emailsent = emailSender.SendEmail();

@@ -141,6 +141,9 @@
   <data name="fromemail.Text" xml:space="preserve">
     <value>From Email</value>
   </data>
+  <data name="manageremail.Text" xml:space="preserve">
+    <value>Manager Email</value>
+  </data>
   <data name="message.Text" xml:space="preserve">
     <value>Message</value>
   </data>
