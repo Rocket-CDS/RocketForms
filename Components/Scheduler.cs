@@ -4,8 +4,7 @@ using System.IO;
 using System.Text;
 using DNNrocketAPI;
 using DNNrocketAPI.Components;
-using RocketCatalog.Components;
-using RocketContent.Components;
+using RocketContentAPI.Components;
 using RocketPortal.Components;
 using Simplisity;
 

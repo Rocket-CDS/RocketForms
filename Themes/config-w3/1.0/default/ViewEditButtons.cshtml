@@ -1,0 +1,91 @@
+@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketContentAPI.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using Rocket.AppThemes.Components;
+@using RocketPortal.Components;
+@using System.Web;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContentAPI/App_LocalResources/")
+
+@{
+    var sessionParams = Model.SessionParamsData;
+    var appThemeList = (AppThemeDataList)Model.GetDataObject("appthemedatalist");
+    var articleData = (ArticleLimpet)Model.GetDataObject("articledata");
+    var appThemeView = (AppThemeLimpet)Model.GetDataObject("appthemeview");
+    var appThemeAdmin = (AppThemeLimpet)Model.GetDataObject("appthemeadmin");
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var info = new SimplisityInfo(moduleData.Record);
+    var projectAppThemeData = new AppThemeProjectLimpet();
+
+    var colorclass = "w3-white";
+
+    if (appThemeView != null)
+    {
+        if (appThemeView.HasPortalLevel())
+        {
+            colorclass = "w3-pale-yellow";
+        }
+        if (appThemeView.HasModuleLevel(moduleData.ModuleRef))
+        {
+            colorclass = "w3-pale-blue";
+       }
+    }
+
+}
+
+<div id="a-editbuttons-@(moduleData.ModuleId)" class=" " style="display: none; position: absolute; top: 0px; left:0px; z-index: 9999;">
+    <div class="w3-container">
+        @if (!moduleData.IsSatellite)
+        {
+            <a href="@sessionParams.Get("editurl")" class="w3-button w3-round w3-white w3-border w3-text-black" title="@ResourceKey("DNNrocket.edit")">
+                <span class="material-icons ">
+                    edit
+                </span>
+            </a>
+        }
+        <a href="?action=clearcache" class="w3-button w3-round w3-white w3-border w3-text-black" title="@ResourceKey("RCT.clearcache")">
+            <span class="material-icons ">
+                sync
+            </span>
+        </a>
+        @if (UserUtils.IsAdministrator())
+        {
+
+            <a href="@sessionParams.Get("settingsurl")" class="w3-button w3-round w3-white w3-border w3-text-black" title="@ResourceKey("DNNrocket.settings")">
+                <span class="material-icons ">
+                    settings
+                </span>
+            </a>
+
+            if (UserUtils.IsSuperUser() && moduleData.HasAppThemeAdmin)
+            {
+                <a href="@sessionParams.Get("appthemeurl")" class="w3-button w3-round w3-border w3-text-black @(colorclass)" title="@ResourceKey("RCT.editapptheme")">
+                    <span class="material-icons ">
+                        movie_edit
+                    </span>
+                </a>
+            }
+        }
+
+
+        <span onclick="$('#a-editbuttons-@(moduleData.ModuleId)').hide();" class="w3-button w3-round w3-border w3-text-black">
+            <span class="material-icons">
+                close
+            </span>
+        </span>
+
+    </div>
+</div>
+
+<script>
+    $(".DnnModule-@(moduleData.ModuleId)").hover(function(){
+          $("#a-editbuttons-@(moduleData.ModuleId)").show();
+      }, function(){
+          $("#a-editbuttons-@(moduleData.ModuleId)").hide();
+    });
+</script>
+

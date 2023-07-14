@@ -120,6 +120,9 @@
   <data name="company.Text" xml:space="preserve">
     <value>Company Name</value>
   </data>
+  <data name="compulsory.Text" xml:space="preserve">
+    <value>* Compulsory</value>
+  </data>
   <data name="contactname.Text" xml:space="preserve">
     <value>Contact Name</value>
   </data>

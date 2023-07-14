@@ -1,0 +1,117 @@
+@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketContentAPI.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using Rocket.AppThemes.Components;
+@using RocketPortal.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/rocketforms/App_LocalResources/")
+
+@{
+    var sessionParams = Model.SessionParamsData;
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    var appThemeList = (AppThemeDataList)Model.GetDataObject("appthemedatalist");
+    var info = new SimplisityInfo(moduleData.Record);
+    var projectAppThemeData = new AppThemeProjectLimpet();
+}
+
+<div id="a-datasection" class="w3-container w3-margin w3-padding">
+
+    <div class="w3-row w3-padding">
+        <div class="w3-quarter">
+            @CheckBox(info,"genxml/settings/disablecache", ResourceKey("DNNrocket.disablecache").ToString(),"class='w3-check'")
+        </div>
+        <div class="w3-quarter">
+            @CheckBox(info,"genxml/settings/injectjquery", ResourceKey("DNNrocket.injectjquery").ToString(),"class='w3-check'")
+        </div>
+        <div class="w3-quarter">
+            @CheckBox(info,"genxml/settings/disableheader", ResourceKey("DNNrocket.disableheader").ToString(),"class='w3-check'")
+        </div>
+        <div class="w3-quarter">
+            @CheckBox(info,"genxml/settings/debugmode", ResourceKey("DNNrocket.debugmode").ToString(),"class='w3-check'")
+        </div>        
+    </div>
+    <div class="w3-row ">
+        <div class="w3-half w3-padding">
+            <label>@ResourceKey("DNNrocket.name")</label>
+            @TextBox(info, "genxml/settings/name"," class='w3-input w3-border' ", "RocketContent: " + moduleData.ModuleRef)
+        </div>
+    </div>
+
+
+        <div class="w3-xlarge">@moduleData.ProjectName</div>
+    @if (!moduleData.IsSatellite)
+    {
+        <div class="w3-row w3-padding">
+            <div class="w3-half">
+                <span class="w3-button w3-theme w3-round-xxlarge simplisity_confirmclick" s-confirm="@ResourceKey("DNNrocket.edit")?" s-cmd="rocketforms_resetapptheme" s-fields='{"moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId"}'>
+                    @ButtonIcon(ButtonTypes.edit)
+                </span>
+                &nbsp;
+                <span><b>@appTheme.Name &nbsp; @moduleData.AppThemeAdminVersion &nbsp; [@ResourceKey("DNNrocket.admin")]</b></span>
+            </div>
+        </div>        
+    }
+
+
+    <div class="w3-row">
+        <div class="w3-row w3-padding">
+            <label class="w3-text-grey">@ResourceKey("RocketForms.fromemail")</label>
+            @TextBox(info, "genxml/settings/fromemail", " class='w3-input w3-border'")
+        </div>
+        <div class="w3-row w3-padding">
+            <label class="w3-text-grey">@ResourceKey("RocketForms.replyto")</label>
+            @TextBox(info, "genxml/settings/replytoemail", " class='w3-input w3-border'")
+        </div>
+        <div class="w3-row w3-padding">
+            <label class="w3-text-grey">@ResourceKey("RocketForms.subject")</label>
+            @TextBox(info, "genxml/settings/subject", " class='w3-input w3-border'")
+        </div>
+        <div class="w3-row w3-padding">
+            @CheckBox(info, "genxml/settings/emailon", ResourceKey("RocketForms.emailon").ToString(), " class='w3-check'", true)
+        </div>
+
+        <!-- Settings records are not localized, so use mulitple fields based on valid languages -->
+        @foreach (var l in DNNrocketUtils.GetCultureCodeList())
+        {
+            <div class="w3-row w3-padding">
+                <label class="w3-text-grey">@ResourceKey("RocketForms.emailsentmessage")</label>&nbsp;@DisplayFlag(l)
+                <div>@TextArea(info, "genxml/settings/emailsentmessage" + l, "rows='4'  class='w3-input w3-border'", ResourceKey("RocketForms.emailsentmessage", l, "Msg").ToString())</div>
+            </div>
+        }
+
+
+    </div>
+        <hr/>
+        <div class="w3-row">
+            @RenderTemplate("ThemeSettings.cshtml", appTheme, Model, true)
+        </div>
+
+</div>
+
+<div class="w3-row w3-padding w3-tiny">
+    <span>ModuleRef: @moduleData.ModuleRef</span>
+</div>
+
+<!-- create element to update settings via API when the DNN update is clicked. -->
+<span id="postsettings" class="w3-hide" s-cmd="rocketforms_savesettings" s-post="#a-datasection" s-fields='{"moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","tabid":"@(Model.SessionParamsData.TabId)"}'></span>
+
+
+
+<script>
+    $(document).ready(function () {
+        $(document).simplisityStartUp('/Desktopmodules/dnnrocket/api/rocket/action', { systemkey: 'rocketforms', debug: false });
+        $('.simplisity_loader').hide();
+
+        $('a[id*="_cmdUpdate"]').off("click");
+        $('a[id*="_cmdUpdate"]').click(function () {
+            simplisity_callserver($('#postsettings'));
+        });
+    });
+</script>
+
+

@@ -1,0 +1,52 @@
+@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketContentAPI.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using Rocket.AppThemes.Components;
+@using RocketPortal.Components;
+
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
+@AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/rocketforms/App_LocalResources/")
+
+@{
+    var sessionParams = Model.SessionParamsData;
+    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+    var appThemeList = (AppThemeDataList)Model.GetDataObject("appthemedatalist");
+    var info = new SimplisityInfo(moduleData.Record);
+    var projectAppThemeData = new AppThemeProjectLimpet();
+
+    var cmd = "rocketforms_selectappthemeversion" + Model.GetSetting("cmdappendix");
+}
+
+<div id="a-datasection" class="w3-container w3-margin w3-padding">
+    <div class="w3-large w3-margin-bottom">
+        @ResourceKey("RCT.selectversion")
+    </div>
+    @foreach (var appThemeV in appTheme.VersionList)
+    {
+        <div class="w3-padding w3-col m2">
+            <div class="w3-button w3-theme w3-round-xxlarge w3-large a-trigger simplisity_click" s-cmd="@cmd" s-fields='{"moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","appthemefolderversion":"@appThemeV"}'>
+                @appThemeV
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(document).simplisityStartUp('/Desktopmodules/dnnrocket/api/rocket/action', { systemkey: 'rocketforms', debug: false });
+        $('.simplisity_loader').hide();
+        @if (appTheme.VersionList.Count == 1)
+        {
+            <text>
+                $('.a-trigger').trigger('click');
+            </text>
+        }
+
+    });
+</script>
+
+
