@@ -61,7 +61,15 @@
 		  <cmd>rocketforms_selectappthemeversionview</cmd>
 		  <action>true</action>
 	  </command>
-
+	  <command>
+		  <cmd>rocketforms_exportmodule</cmd>
+		  <action>true</action>
+	  </command>
+	  <command>
+		  <cmd>rocketforms_importmodule</cmd>
+		  <action>true</action>
+	  </command>
+	  
 
   </commands>
   

@@ -72,6 +72,13 @@ namespace RocketForms.API
                 case "rocketforms_resetappthemeview":
                     strOut = ResetAppThemeView();
                     break;
+                case "rocketforms_exportmodule":
+                    strOut = ExportData();
+                    break;
+                case "rocketforms_importmodule":
+                    ImportData();
+                    strOut = "";
+                    break;
 
 
 
@@ -98,6 +105,7 @@ namespace RocketForms.API
 
             _tabId = _paramInfo.GetXmlPropertyInt("genxml/hidden/tabid");
             _moduleId = _postInfo.GetXmlPropertyInt("genxml/hidden/moduleid");
+            if (_moduleId <= 0) _moduleId = _paramInfo.GetXmlPropertyInt("genxml/hidden/moduleid");
             _formref = _postInfo.GetXmlProperty("genxml/hidden/formref");
             if (_formref == "") _formref = _paramInfo.GetXmlProperty("genxml/hidden/formref");
             _sessionParams.ModuleId = _moduleId;
