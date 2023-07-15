@@ -101,7 +101,7 @@ namespace RocketForms.API
                 rtn += "<appthemes>";
                 rtn += "<admin>";
 
-                var zipMapPath = _dataObject.AppTheme.ExportZipFile(_dataObject.ModuleSettings.ModuleRef);
+                var zipMapPath = _dataObject.AppTheme.ExportZipFile(_dataObject.PortalId, _dataObject.ModuleSettings.ModuleRef);
                 var systemByte = File.ReadAllBytes(zipMapPath);
                 var systemBase64 = Convert.ToBase64String(systemByte, Base64FormattingOptions.None);
                 rtn += "<systembase64 filetype='zip'><![CDATA[";
@@ -109,7 +109,7 @@ namespace RocketForms.API
                 rtn += "]]></systembase64>";
                 File.Delete(zipMapPath);
 
-                zipMapPath = _dataObject.AppTheme.ExportPortalZipFile(_dataObject.ModuleSettings.ModuleRef);
+                zipMapPath = _dataObject.AppTheme.ExportPortalZipFile(_dataObject.PortalId, _dataObject.ModuleSettings.ModuleRef);
                 systemByte = File.ReadAllBytes(zipMapPath);
                 systemBase64 = Convert.ToBase64String(systemByte, Base64FormattingOptions.None);
                 rtn += "<portalbase64 filetype='zip'><![CDATA[";
@@ -126,30 +126,30 @@ namespace RocketForms.API
 
             return rtn;
         }
-        private void ImportAppTheme(AppThemeLimpet appTheme, XmlNode appThemeNod, string prefix)
+        private void ImportAppTheme(int portalId, AppThemeLimpet appTheme, XmlNode appThemeNod, string prefix)
         {
             if (appTheme != null && appThemeNod != null)
             {
                 var base64String = appThemeNod.InnerText;
                 if (base64String != "")
                 {
-                    var importZipMapPath = PortalUtils.TempDirectoryMapPath() + "\\" + prefix + ".zip";
+                    var importZipMapPath = PortalUtils.TempDirectoryMapPath(portalId) + "\\" + prefix + ".zip";
                     File.WriteAllBytes(importZipMapPath, Convert.FromBase64String(base64String));
-                    appTheme.ImportZipFile(importZipMapPath);
+                    appTheme.ImportZipFile(portalId, importZipMapPath);
                     if (File.Exists(importZipMapPath)) File.Delete(importZipMapPath);
                 }
             }
         }
-        private void ImportPortalAppTheme(AppThemeLimpet appTheme, XmlNode appThemeNod, string prefix, string oldModuleRef, string newModuleRef)
+        private void ImportPortalAppTheme(int portalId, AppThemeLimpet appTheme, XmlNode appThemeNod, string prefix, string oldModuleRef, string newModuleRef)
         {
             if (appTheme != null && appThemeNod != null)
             {
                 var base64String = appThemeNod.InnerText;
                 if (base64String != "")
                 {
-                    var importZipMapPath = PortalUtils.TempDirectoryMapPath() + "\\" + prefix + ".zip";
+                    var importZipMapPath = PortalUtils.TempDirectoryMapPath(portalId) + "\\" + prefix + ".zip";
                     File.WriteAllBytes(importZipMapPath, Convert.FromBase64String(base64String));
-                    appTheme.ImportPortalZipFile(importZipMapPath, oldModuleRef, newModuleRef);
+                    appTheme.ImportPortalZipFile(portalId, importZipMapPath, oldModuleRef, newModuleRef);
                     if (File.Exists(importZipMapPath)) File.Delete(importZipMapPath);
                 }
             }
@@ -212,8 +212,8 @@ namespace RocketForms.API
                         }
 
                         // Import AppTheme
-                        ImportAppTheme(appThemeAdmin, xmlDoc.SelectSingleNode("export/appthemes/admin/systembase64"), moduleRef + "adminsystem");
-                        ImportPortalAppTheme(appThemeAdmin, xmlDoc.SelectSingleNode("export/appthemes/admin/portalbase64"), moduleRef + "adminportal", legacymoduleref, moduleRef);
+                        ImportAppTheme(moduleSettings.PortalId, appThemeAdmin, xmlDoc.SelectSingleNode("export/appthemes/admin/systembase64"), moduleRef + "adminsystem");
+                        ImportPortalAppTheme(moduleSettings.PortalId, appThemeAdmin, xmlDoc.SelectSingleNode("export/appthemes/admin/portalbase64"), moduleRef + "adminportal", legacymoduleref, moduleRef);
                     }
                 }
 

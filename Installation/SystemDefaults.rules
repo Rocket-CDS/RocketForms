@@ -63,11 +63,11 @@
 	  </command>
 	  <command>
 		  <cmd>rocketforms_exportmodule</cmd>
-		  <action>true</action>
+		  <action>false</action>
 	  </command>
 	  <command>
 		  <cmd>rocketforms_importmodule</cmd>
-		  <action>true</action>
+		  <action>false</action>
 	  </command>
 	  
 
