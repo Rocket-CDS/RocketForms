@@ -171,4 +171,7 @@
   <data name="tel.Text" xml:space="preserve">
     <value>Tel.</value>
   </data>
+  <data name="gdprMessage.Text" xml:space="preserve">
+    <value>By validating this form, you accept that informations you've entered can be used to contact you. *</value>
+  </data>
 </root>
