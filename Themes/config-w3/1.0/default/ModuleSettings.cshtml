@@ -60,16 +60,16 @@
 
     <div class="w3-row">
         <div class="w3-row w3-padding">
+            <label class="w3-text-grey">@ResourceKey("RocketForms.subject")</label>
+            @TextBox(info, "genxml/settings/subject", " class='w3-input w3-border'")
+        </div>
+        <div class="w3-row w3-padding">
             <label class="w3-text-grey">@ResourceKey("RocketForms.fromemail")</label>
             @TextBox(info, "genxml/settings/fromemail", " class='w3-input w3-border'")
         </div>
         <div class="w3-row w3-padding">
-            <label class="w3-text-grey">@ResourceKey("RocketForms.replyto")</label>
-            @TextBox(info, "genxml/settings/replytoemail", " class='w3-input w3-border'")
-        </div>
-        <div class="w3-row w3-padding">
-            <label class="w3-text-grey">@ResourceKey("RocketForms.subject")</label>
-            @TextBox(info, "genxml/settings/subject", " class='w3-input w3-border'")
+            <label class="w3-text-grey">@ResourceKey("RocketForms.manageremail")</label>
+            @TextBox(info, "genxml/settings/manageremail", " class='w3-input w3-border'")
         </div>
         <div class="w3-row w3-padding">
             @CheckBox(info, "genxml/settings/emailon", ResourceKey("RocketForms.emailon").ToString(), " class='w3-check'", true)

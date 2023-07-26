@@ -50,6 +50,7 @@ namespace RocketForms.API
                 // Get list of forms from Directory
                 var formlist = new List<SimplisityRecord>();
                 var folderPath = PortalUtils.HomeDirectoryMapPath(_portalId) + "\\DNNrocket\\" + _dataObject.SystemKey + "\\" + _dataObject.ModuleSettings.ModuleRef;
+                if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
                 var l = Directory.GetFiles(folderPath).OrderByDescending(i => i);
                 foreach (var f in l)
                 {
@@ -187,7 +188,10 @@ namespace RocketForms.API
                 if (pr.StatusCode == "00" && _dataObject.ModuleSettings.GetSettingBool("emailon"))
                 {
                     var eFunc = new EmailLimpet(portalid, _sessionParams.CultureCode);
-                    eFunc.SendEmail(pr.RenderedText, _dataObject.ModuleSettings.GetSetting("fromemail"), _dataObject.ModuleSettings.GetSetting("manageremail"), _dataObject.ModuleSettings.GetSetting("replytoemail"), _dataObject.ModuleSettings.GetSetting("subject"));
+                    var replyEmail = rtnRecord.GetXmlProperty("genxml/textbox/email");
+                    if (replyEmail == "") replyEmail = rtnRecord.GetXmlProperty("genxml/textbox/replytoemail");
+                    if (replyEmail == "") replyEmail = _dataObject.ModuleSettings.GetSetting("manageremail");
+                    eFunc.SendEmail(pr.RenderedText, _dataObject.ModuleSettings.GetSetting("fromemail"), _dataObject.ModuleSettings.GetSetting("manageremail"), replyEmail, _dataObject.ModuleSettings.GetSetting("subject"));
                 }
             }
         }

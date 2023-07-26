@@ -11,7 +11,10 @@
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketForms/App_LocalResources/")
 
-
+<div class="w3-row w3-padding">
+    <label class="w3-text-grey">@ResourceKey("RocketForms.subject")</label>
+    @TextBox(info, "genxml/textbox/subject", " class='w3-input w3-border'")
+</div>
 <div class="w3-row w3-padding">
     <label class="w3-text-grey">@ResourceKey("RocketForms.fromemail")</label>
     @TextBox(info, "genxml/textbox/fromemail", " class='w3-input w3-border'")
@@ -21,19 +24,7 @@
     @TextBox(info, "genxml/textbox/manageremail", " class='w3-input w3-border'")
 </div>
 <div class="w3-row w3-padding">
-    <label class="w3-text-grey">@ResourceKey("RocketForms.replyto")</label>
-    @TextBox(info, "genxml/textbox/replytoemail", " class='w3-input w3-border'")
-</div>
-<div class="w3-row w3-padding">
-    <label class="w3-text-grey">@ResourceKey("RocketForms.subject")</label>
-    @TextBox(info, "genxml/textbox/subject", " class='w3-input w3-border'")
-</div>
-<div class="w3-row w3-padding">
     @CheckBox(info, "genxml/checkbox/emailon", ResourceKey("RocketForms.emailon").ToString(), " class='w3-check'", true)
-</div>
-<div class="w3-row w3-padding">
-    <label class="w3-text-grey">@ResourceKey("RocketForms.editurl")</label>
-    @TextBox(info, "genxml/textbox/editurl", " class='w3-input w3-border'", Model.SessionParamsData.PageUrl)
 </div>
 
 <!-- Settings records are not localized, so use mulitple fields based on valid languages -->
