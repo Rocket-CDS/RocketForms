@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="company.Text" xml:space="preserve">
-    <value>Nom de l'entreprise</value>
+    <value>Prénom</value>
   </data>
   <data name="compulsory.Text" xml:space="preserve">
     <value>* Obligatoire</value>
@@ -151,7 +151,7 @@
     <value>En validant ce formulaire, vous acceptez que les informations que vous avez entrées peuvent être utilisées pour vous contacter.</value>
   </data>
   <data name="manageremail.Text" xml:space="preserve">
-    <value>Courriel du directeur</value>
+    <value>E-mail du manager</value>
   </data>
   <data name="message.Text" xml:space="preserve">
     <value>Message</value>
