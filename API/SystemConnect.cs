@@ -32,9 +32,6 @@ namespace RocketForms.API
             if (portalId >= 0)
             {
                 _dataObject.PortalContent.Save(_postInfo);
-                _dataObject.PortalData.Record.SetXmlProperty("genxml/systems/" + _dataObject.SystemKey + "setup", "True");
-                _dataObject.PortalData.Record.SetXmlProperty("genxml/systems/" + _dataObject.SystemKey, "True");
-                _dataObject.PortalData.Update();
                 return RocketSystem();
             }
             return "Invalid PortalId";
@@ -85,7 +82,7 @@ namespace RocketForms.API
         {
             // check the scheduler initiated the call.
             var rtn = "";
-            var securityKey = DNNrocketUtils.GetTempStorage(_paramInfo.GetXmlProperty("genxml/hidden/securitykey"));
+            var securityKey = DNNrocketUtils.GetTempStorage(_paramInfo.GetXmlProperty("genxml/hidden/securitykey"), true);
             if (securityKey != null) // if it exists in the temp table, it was created by the scheduler.
             {
 
@@ -157,7 +154,7 @@ namespace RocketForms.API
         private void ImportData()
         {
             // check the scheduler initiated the call.
-            var securityKey = DNNrocketUtils.GetTempStorage(_paramInfo.GetXmlProperty("genxml/hidden/securitykey"));
+            var securityKey = DNNrocketUtils.GetTempStorage(_paramInfo.GetXmlProperty("genxml/hidden/securitykey"), true);
             if (securityKey != null) // if it exists in the temp table, it was created by the scheduler.
             {
 

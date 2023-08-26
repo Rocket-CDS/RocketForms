@@ -9,12 +9,12 @@
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocket/RocketPortal/App_LocalResources/")
 
 @{
-
     var sessionParams = Model.SessionParamsData;
     var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-    var rtnUrl = DNNrocketUtils.NavigateURL(sessionParams.TabId,  new string[0]);
+    var userParams = new UserParams("ModuleID:" + sessionParams.ModuleId, true);
+    var rtnUrl = userParams.Get("viewurl");
 }
 
 <div id="a-articledata" class=" w3-padding">

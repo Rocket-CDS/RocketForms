@@ -22,12 +22,12 @@
 
 <div id="a-datasection" class="w3-container w3-margin w3-padding">
     <div class="w3-large w3-margin-bottom">
-        @ResourceKey("RCT.selectapptheme") AAAAAAAAAAAAAAAAAAA
+        @ResourceKey("RCT.selectapptheme") 
     </div>
     @foreach (var appTheme2 in appThemeList.List)
     {
         <div class="w3-padding w3-third">
-            <div class="w3-button w3-theme w3-round-xxlarge w3-large simplisity_click" s-cmd="@cmd" s-fields='{"moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","appthemefolder":"@appTheme2.AppThemeFolder"}'>
+            <div class="w3-button w3-theme w3-round w3-block w3-large simplisity_click" s-cmd="@cmd" s-fields='{"moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","appthemefolder":"@appTheme2.AppThemeFolder"}'>
                 @appTheme2.Name
             </div>
         </div>

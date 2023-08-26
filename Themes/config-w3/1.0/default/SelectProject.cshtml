@@ -28,7 +28,7 @@
     @foreach (var projectInfo in projectAppThemeData.List)
     {
         <div class="w3-padding w3-third">
-            <div class="w3-button w3-theme w3-round-xxlarge w3-large a-trigger simplisity_click" s-cmd="rocketforms_selectappthemeproject" s-fields='{"moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","projectname":"@projectInfo.GetXmlProperty("genxml/textbox/name")"}'>
+            <div class="w3-button w3-theme w3-round w3-block w3-large a-trigger simplisity_click" s-cmd="rocketforms_selectappthemeproject" s-fields='{"moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","projectname":"@projectInfo.GetXmlProperty("genxml/textbox/name")"}'>
                 @projectInfo.GetXmlProperty("genxml/textbox/name")
             </div>
         </div>

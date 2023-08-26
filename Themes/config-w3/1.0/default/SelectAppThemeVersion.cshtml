@@ -28,7 +28,7 @@
     @foreach (var appThemeV in appTheme.VersionList)
     {
         <div class="w3-padding w3-col m2">
-            <div class="w3-button w3-theme w3-round-xxlarge w3-large a-trigger simplisity_click" s-cmd="@cmd" s-fields='{"moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","appthemefolderversion":"@appThemeV"}'>
+            <div class="w3-button w3-theme w3-round w3-block w3-large a-trigger simplisity_click" s-cmd="@cmd" s-fields='{"moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","appthemefolderversion":"@appThemeV"}'>
                 @appThemeV
             </div>
         </div>
