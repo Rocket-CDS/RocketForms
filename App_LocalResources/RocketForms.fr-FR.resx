@@ -118,10 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="company.Text" xml:space="preserve">
+    <value>Société</value>
+  </data>
+  <data name="firstname.Text" xml:space="preserve">
     <value>Prénom</value>
   </data>
   <data name="compulsory.Text" xml:space="preserve">
-    <value>* Obligatoire</value>
+    <value>* champs requis</value>
   </data>
   <data name="contactname.Text" xml:space="preserve">
     <value>Nom du contact</value>
@@ -130,31 +133,31 @@
     <value>Module Edit Url</value>
   </data>
   <data name="email.Text" xml:space="preserve">
-    <value>Courrier électronique</value>
+    <value>E-mail</value>
   </data>
   <data name="emailon.Text" xml:space="preserve">
-    <value>Envoyer un courriel</value>
+    <value>Envoi activé</value>
   </data>
   <data name="emailsentmessage.Msg" xml:space="preserve">
-    <value>Courriel envoyé</value>
+    <value>Le formulaire a bien été envoyé.</value>
   </data>
   <data name="emailsentmessage.Text" xml:space="preserve">
-    <value>Courriel Envoyé Message</value>
+    <value>Message formulaire envoyé</value>
   </data>
   <data name="fromemail.Text" xml:space="preserve">
-    <value>De l'email</value>
+    <value>Expéditeur</value>
   </data>
   <data name="fromemailerror.Text" xml:space="preserve">
-    <value>ERREUR : E-mail non valide..</value>
+    <value>Pas de paramètre pour le module</value>
   </data>
   <data name="gdprmessage.Text" xml:space="preserve">
-    <value>En validant ce formulaire, vous acceptez que les informations que vous avez entrées peuvent être utilisées pour vous contacter.</value>
+    <value>En soumettant ce formulaire, j'accepte que les informations saisies soient utilisées pour permettre de me recontacter.</value>
   </data>
   <data name="manageremail.Text" xml:space="preserve">
-    <value>E-mail du manager</value>
+    <value>Destinataire</value>
   </data>
   <data name="message.Text" xml:space="preserve">
-    <value>Message</value>
+    <value>Votre message</value>
   </data>
   <data name="mobiletel.Text" xml:space="preserve">
     <value>Mobile Tel.</value>
@@ -166,13 +169,13 @@
     <value>OK</value>
   </data>
   <data name="replyto.Text" xml:space="preserve">
-    <value>Répondre à</value>
+    <value>E-mail de réponse</value>
   </data>
   <data name="send.Text" xml:space="preserve">
     <value>Envoyer</value>
   </data>
   <data name="subject.Text" xml:space="preserve">
-    <value>Sujet</value>
+    <value>Objet de la demande</value>
   </data>
   <data name="tel.Text" xml:space="preserve">
     <value>Tél.</value>

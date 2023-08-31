@@ -118,10 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="company.Text" xml:space="preserve">
+    <value>Company</value>
+  </data>
+  <data name="firstname.Text" xml:space="preserve">
     <value>First name</value>
   </data>
   <data name="compulsory.Text" xml:space="preserve">
-    <value>* Compulsory</value>
+    <value>* compulsory fields</value>
   </data>
   <data name="contactname.Text" xml:space="preserve">
     <value>Contact Name</value>
@@ -133,25 +136,25 @@
     <value>E-mail</value>
   </data>
   <data name="emailon.Text" xml:space="preserve">
-    <value>Send Email</value>
+    <value>Send enabled</value>
   </data>
   <data name="emailsentmessage.Msg" xml:space="preserve">
-    <value>Email Sent</value>
+    <value>The form has been successfully sent.</value>
   </data>
   <data name="emailsentmessage.Text" xml:space="preserve">
-    <value>Email Sent Message</value>
+    <value>Form message sent</value>
   </data>
   <data name="fromemail.Text" xml:space="preserve">
-    <value>From Email</value>
+    <value>Sender</value>
   </data>
   <data name="fromemailerror.Text" xml:space="preserve">
-    <value>ERROR: Invalid Email in settings.</value>
+    <value>No parameter for the module</value>
   </data>
   <data name="gdprmessage.Text" xml:space="preserve">
-    <value>With validating this form, you accept that the informations you've entered can be used to contact you.</value>
+    <value>By submitting this form you accept that the information entered may be used to contact you.</value>
   </data>
   <data name="manageremail.Text" xml:space="preserve">
-    <value>Manager Email</value>
+    <value>Recipient</value>
   </data>
   <data name="message.Text" xml:space="preserve">
     <value>Message</value>
