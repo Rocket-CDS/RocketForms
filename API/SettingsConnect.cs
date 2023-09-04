@@ -26,10 +26,7 @@ namespace RocketForms.API
         {
             _dataObject.SetSetting("cmdappendix", cmdappendix);
             var moduleData = _dataObject.ModuleSettings;
-            if (cmdappendix == "")
-                moduleData.AppThemeAdminFolder = _paramInfo.GetXmlProperty("genxml/hidden/appthemefolder");
-            else
-                moduleData.AppThemeViewFolder = _paramInfo.GetXmlProperty("genxml/hidden/appthemefolder");
+            moduleData.AppThemeAdminFolder = _paramInfo.GetXmlProperty("genxml/hidden/appthemefolder");
             _dataObject.SetDataObject("modulesettings", moduleData);
             moduleData.Update();
             return RenderSystemTemplate("SelectAppThemeVersion.cshtml");
@@ -38,10 +35,7 @@ namespace RocketForms.API
         {
             _dataObject.SetSetting("cmdappendix", cmdappendix);
             var moduleData = _dataObject.ModuleSettings;
-            if (cmdappendix == "")
-                moduleData.AppThemeAdminVersion = _paramInfo.GetXmlProperty("genxml/hidden/appthemefolderversion");
-            else
-                moduleData.AppThemeViewVersion = _paramInfo.GetXmlProperty("genxml/hidden/appthemefolderversion");
+            moduleData.AppThemeAdminVersion = _paramInfo.GetXmlProperty("genxml/hidden/appthemefolderversion");
             _dataObject.SetDataObject("modulesettings", moduleData);
             moduleData.Update();
             return RenderSystemTemplate("ModuleSettings.cshtml");
@@ -61,8 +55,6 @@ namespace RocketForms.API
         {
             _dataObject.SetSetting("cmdappendix", "view");
             var moduleData = _dataObject.ModuleSettings;
-            moduleData.AppThemeViewFolder = "";
-            moduleData.AppThemeViewVersion = "";
             moduleData.Update();
             _dataObject.SetDataObject("modulesettings", moduleData);
             return RenderSystemTemplate("SelectAppTheme.cshtml");
