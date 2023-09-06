@@ -46,15 +46,13 @@
         <div class="w3-xlarge">@moduleData.ProjectName</div>
     @if (!moduleData.IsSatellite)
     {
-        <div class="w3-row w3-padding">
-            <div class="w3-half">
-                <span class="w3-button w3-theme w3-round w3-block simplisity_confirmclick" s-confirm="@ResourceKey("DNNrocket.edit")?" s-cmd="rocketforms_resetapptheme" s-fields='{"moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId"}'>
-                    @ButtonIcon(ButtonTypes.edit)
-                </span>
-                &nbsp;
-                <span><b>@appTheme.Name &nbsp; @moduleData.AppThemeAdminVersion &nbsp; [@ResourceKey("DNNrocket.admin")]</b></span>
-            </div>
-        </div>        
+        <div class="w3-row w3-padding a-adminapptheme">
+            <span class="w3-button w3-theme w3-round simplisity_confirmclick" s-confirm="@ResourceKey("DNNrocket.edit")?" s-cmd="rocketforms_resetapptheme" s-fields='{"moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId"}'>
+                @ButtonIcon(ButtonTypes.edit)
+            </span>
+            &nbsp;
+            <span><b>@appTheme.Name &nbsp; @moduleData.AppThemeAdminVersion</b></span>
+        </div>
     }
 
 
