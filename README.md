@@ -1,4 +1,4 @@
-# RocketForms
+# RocketForms v1.0.2.1
 
 RocketForms sends emails with data that has been filled in on a website. Like a contact form or administration form.  
 
