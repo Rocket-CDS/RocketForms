@@ -97,8 +97,8 @@ namespace RocketForms.API
             _postInfo = postInfo;
             _paramInfo = paramInfo;
 
-            var portalid = PortalUtils.GetCurrentPortalId();
-            if (portalid < 0 && systemInfo.PortalId >= 0) portalid = systemInfo.PortalId;
+            _portalId = PortalUtils.GetCurrentPortalId();
+            if (_portalId < 0 && systemInfo.PortalId >= 0) _portalId = systemInfo.PortalId;
 
             var rocketInterface = new RocketInterface(interfaceInfo);
             _sessionParams = new SessionParams(_paramInfo);
@@ -109,7 +109,7 @@ namespace RocketForms.API
             _formref = _postInfo.GetXmlProperty("genxml/hidden/formref");
             if (_formref == "") _formref = _paramInfo.GetXmlProperty("genxml/hidden/formref");
             _sessionParams.ModuleId = _moduleId;
-            _sessionParams.ModuleRef = portalid + "_ModuleID_" + _moduleId;
+            _sessionParams.ModuleRef = _portalId + "_ModuleID_" + _moduleId;
             _sessionParams.TabId = _tabId;
 
             // use a selectkey.  the selectkey is the same as the rowkey.
@@ -124,7 +124,7 @@ namespace RocketForms.API
             DNNrocketUtils.SetCurrentCulture(_sessionParams.CultureCode);
             DNNrocketUtils.SetEditCulture(_sessionParams.CultureCodeEdit);
 
-            _dataObject = new Components.DataObjectLimpet(portalid, _sessionParams.ModuleRef, _formref, _sessionParams);
+            _dataObject = new Components.DataObjectLimpet(_portalId, _sessionParams.ModuleRef, _formref, _sessionParams);
 
             if (!_dataObject.ModuleSettings.HasAppThemeAdmin) // Check if we have an AppTheme
             {

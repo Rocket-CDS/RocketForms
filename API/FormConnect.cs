@@ -58,7 +58,7 @@ namespace RocketForms.API
                     formlist.Add(sRec);
                 }
                 _dataObject.SetDataObject("formlist", formlist);
-                var razorTempl = _dataObject.AppThemeSystem.GetTemplate("AdminDetail.cshtml");
+                var razorTempl = _dataObject.AppThemeSystem.GetTemplate("AdminDetail.cshtml", _dataObject.ModuleSettings.ModuleRef);
                 var pr = RenderRazorUtils.RazorProcessData(razorTempl, _postInfo, _dataObject.DataObjects, null, _sessionParams, true);
                 if (pr.StatusCode != "00") return pr.ErrorMsg;
                 return pr.RenderedText;
@@ -107,7 +107,7 @@ namespace RocketForms.API
                 FileUtils.SaveFile(fileMapPath, dataSave);
                 SendEmailForm(_portalId, fileMapPath);
                 var portalContent = new PortalContentLimpet(_portalId, _sessionParams.CultureCodeEdit); // Portal 0 is admin, editing portal setup
-                var razorTempl = _dataObject.AppTheme.GetTemplate("SentMessage.cshtml");
+                var razorTempl = _dataObject.AppTheme.GetTemplate("SentMessage.cshtml", _dataObject.ModuleSettings.ModuleRef);
                 var pr = RenderRazorUtils.RazorProcessData(razorTempl, _postInfo, _dataObject.DataObjects, null, _sessionParams, true);
                 if (pr.StatusCode != "00") return pr.ErrorMsg;
                 return pr.RenderedText;
@@ -156,7 +156,7 @@ namespace RocketForms.API
                         strText = strText.Replace(Environment.NewLine, "<br/>");
                         strText = strText.Replace("\n", "<br/>");
                         strText = strText.Replace("\r", "<br/>");
-                        sRecDecode.SetXmlProperty("genxml/" + d.Key, strText);
+                        sRecDecode.SetXmlProperty("genxml/" + d.Key, SecurityInput.RemoveScripts(strText));
                     }
                     catch (Exception)
                     {
@@ -172,7 +172,9 @@ namespace RocketForms.API
             var rtnRecord = ReadFileRecord(fileMapPath);
             if (rtnRecord != null)
             {
-                var razorTemplEmail = _dataObject.AppTheme.GetTemplate("EmailForm.cshtml");
+                var razorTemplEmail = _dataObject.AppTheme.GetTemplate("EmailForm.cshtml", _dataObject.ModuleSettings.ModuleRef);
+                if (razorTemplEmail == "") razorTemplEmail = _dataObject.AppThemeSystem.GetTemplate("EmailForm.cshtml", _dataObject.ModuleSettings.ModuleRef);
+                _dataObject.SetDataObject("formdata", rtnRecord);
                 var pr = RenderRazorUtils.RazorProcessData(razorTemplEmail, new SimplisityInfo(rtnRecord), _dataObject.DataObjects, null, _sessionParams, true);
                 if (pr.StatusCode != "00") LogUtils.LogSystem("ERROR - RocketForms Email: " + pr.ErrorMsg);
                 if (_dataObject.ModuleSettings.GetSettingBool("debugmode"))

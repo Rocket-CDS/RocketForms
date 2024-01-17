@@ -2,6 +2,7 @@
 using DNNrocketAPI.Components;
 using Rocket.AppThemes.Components;
 using RocketContentAPI.Components;
+using RocketForms.Components;
 using Simplisity;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace RocketForms.API
 
         private string RenderSystemTemplate(string templateName)
         {
-            var razorTempl = _dataObject.AppThemeSystem.GetTemplate(templateName);
+            var razorTempl = _dataObject.AppThemeSystem.GetTemplate(templateName, _dataObject.ModuleSettings.ModuleRef);
             var pr = RenderRazorUtils.RazorProcessData(razorTempl, _dataObject.DataObjects, _dataObject.Settings, _sessionParams, true);
             if (pr.StatusCode != "00") return pr.ErrorMsg;
             return pr.RenderedText;
@@ -68,7 +69,7 @@ namespace RocketForms.API
             UserUtils.SignOut();
 
             var portalAppThemeSystem = new AppThemeDNNrocketLimpet("rocketportal");
-            var razorTempl = portalAppThemeSystem.GetTemplate("Reload.cshtml");
+            var razorTempl = portalAppThemeSystem.GetTemplate("Reload.cshtml", _dataObject.ModuleSettings.ModuleRef);
             var pr = RenderRazorUtils.RazorProcessData(razorTempl, null, _dataObject.DataObjects, _dataObject.Settings, _sessionParams, true);
             if (pr.StatusCode != "00") return pr.ErrorMsg;
             return pr.RenderedText;
@@ -204,7 +205,7 @@ namespace RocketForms.API
 
                     objCtrl.Update(ms);
 
-                    var moduleSettings = new ModuleContentLimpet(portalId, moduleRef, systemKey, moduleId, tabId);
+                    var moduleSettings = new ModuleFormsLimpet(portalId, moduleRef, systemKey, moduleId, tabId);
 
                     if (moduleSettings.HasProject)
                     {

@@ -6,12 +6,13 @@
 @using Rocket.AppThemes.Components;
 @using RocketPortal.Components;
 @using System.Web;
+@using RocketForms.Components;
 
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContentAPI/App_LocalResources/")
 
 @{
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var moduleData = (ModuleFormsLimpet)Model.GetDataObject("modulesettings");
     var userParams = new UserParams("ModuleID:" + moduleData.ModuleId, true);
 }
 

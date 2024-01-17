@@ -1,19 +1,13 @@
-@inherits RocketContentAPI.Components.RocketContentAPITokens<Simplisity.SimplisityRazor>
+@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
-@using RocketContentAPI.Components;
 @using Simplisity;
 @using RazorEngine.Text;
 @using RocketPortal.Components;
-
-@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
-@AddProcessData("resourcepath", "/DesktopModules/DNNrocket/RocketPortal/App_LocalResources/")
+@using RocketForms.Components;
+@AssigDataModel(Model)
+<!--inject-->
 
 @{
-    var sessionParams = Model.SessionParamsData;
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
-    var userParams = new UserParams("ModuleID:" + sessionParams.ModuleId, true);
     var rtnUrl = userParams.Get("viewurl");
 }
 
@@ -32,7 +26,19 @@
         </div>
     </div>
 
-    @RenderTemplate("AdminList.cshtml", appTheme, Model, true)
+    @if (appTheme.GetTemplate("AdminList.cshtml") == "")
+    {
+        <div>
+            @RenderTemplate("AdminList.cshtml", appThemeSystem, Model, true)
+        </div>
+    }
+    else
+    {
+        <div>
+            @RenderTemplate("AdminList.cshtml", appTheme, Model, true)
+        </div>
+    }
+
 
 
 </div>

@@ -29,13 +29,14 @@ namespace RocketForms.Components
 
             _passSettings = new Dictionary<string, string>();
             _dataObjects = new Dictionary<string, object>();
-            var moduleSettings = new ModuleContentLimpet(portalid, moduleRef, SystemKey, moduleId, tabId);
+            var moduleSettings = new ModuleFormsLimpet(portalid, moduleRef, SystemKey, moduleId, tabId);
 
             SetDataObject("modulesettings", moduleSettings);
             SetDataObject("appthemesystem", AppThemeUtils.AppThemeSystem(portalid, SystemKey));
             SetDataObject("portaldata", new PortalLimpet(portalid));
             SetDataObject("systemdata", SystemSingleton.Instance(SystemKey));
             SetDataObject("appthemeprojects", AppThemeUtils.AppThemeProjects());
+            SetDataObject("userparams", new UserParams(UserUtils.GetCurrentUserId()));
 
         }
         public void SetDataObject(String key, object value)
@@ -78,7 +79,7 @@ namespace RocketForms.Components
         public string SystemKey { get { return "rocketforms"; } }
         public int PortalId { get { return PortalData.PortalId; } }
         public Dictionary<string, object> DataObjects { get { return _dataObjects; } }
-        public ModuleContentLimpet ModuleSettings { get { return (ModuleContentLimpet)GetDataObject("modulesettings"); } }
+        public ModuleFormsLimpet ModuleSettings { get { return (ModuleFormsLimpet)GetDataObject("modulesettings"); } }
         public AppThemeSystemLimpet AppThemeSystem { get { return (AppThemeSystemLimpet)GetDataObject("appthemesystem"); } }
         public PortalContentLimpet PortalContent { get { return (PortalContentLimpet)GetDataObject("portalcontent"); } }
         public AppThemeLimpet AppTheme { get { return (AppThemeLimpet)GetDataObject("apptheme"); } set { SetDataObject("apptheme", value); } }

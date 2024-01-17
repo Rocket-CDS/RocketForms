@@ -1,15 +1,12 @@
 @inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
 @using DNNrocketAPI.Components;
-@using RocketContentAPI.Components;
 @using Simplisity;
 @using RazorEngine.Text;
 @using Rocket.AppThemes.Components;
 @using RocketPortal.Components;
-
-@{
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-}
+@using RocketForms.Components;
+@AssigDataModel(Model)
+<!--inject-->
 
 <!-- create element to load settings. -->
 <span id="loadsettings" class="" s-cmd="rocketforms_settings" s-fields='{"moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","tabid":"@(Model.SessionParamsData.TabId)"}'></span>

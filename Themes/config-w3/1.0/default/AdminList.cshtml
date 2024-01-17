@@ -1,0 +1,97 @@
+@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using Rocket.AppThemes.Components;
+@using RocketPortal.Components;
+@using System.Xml;
+@AssigDataModel(Model)
+<!--inject-->
+@{
+    var formlist = (List<SimplisityRecord>)Model.GetDataObject("formlist");
+    var lp = 1;
+    string[] donotshow = { "createddate", "fileuploadlist", "fileuploadbase64", "activevalue", "simplisity_language", "simplisity_editlanguage", "simplisity_return", "browsersessionid", "browserid", "systemkey", "moduleid" };
+}
+
+<input class="w3-input w3-border w3-padding w3-margin-top" type="text" placeholder="Search..." id="searchinput" onkeydown="if (event.keyCode == 13) { event.preventDefault(); }" onkeyup="myFunction()">
+
+<table class="w3-table w3-margin-top simplisity_panel" id="searchtable">
+
+
+    @foreach (SimplisityRecord f in formlist)
+    {
+        <tr>
+            <td>
+                <div class="w3-row w3-card">
+                    <div class="w3-row w3-padding w3-hover-light-grey" onclick="$('.formmessage@(lp)').toggle()">
+                        <b>@f.GetXmlPropertyDate("genxml/createddate").ToShortDateString() @f.GetXmlPropertyDate("genxml/createddate").ToShortTimeString() &nbsp;:&nbsp; @f.GetXmlProperty("genxml/email")</b> &nbsp; @f.GetXmlProperty("genxml/company"), @f.GetXmlProperty("genxml/name"), @ResourceKey("RocketForms.tel"): @f.GetXmlProperty("genxml/tel")
+
+                        <div class="w3-button w3-right w3-small simplisity_click" s-cmd="rocketforms_delete" s-fields='{"formref":"@(f.GUIDKey)","moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","tabid":"@moduleData.TabId"}'>
+                            @ButtonIcon(ButtonTypes.delete)
+                        </div>
+                        <div class="w3-margin-right w3-small w3-right">
+                            @RenderXml(new SimplisityInfo(f))
+                        </div>
+                    </div>
+                    <div class="w3-row w3-padding w3-pale-yellow formmessage@(lp)" style="display:none;">
+                        <div class="w3-margin-bottom">
+                            <b>@ResourceKey("RocketForms.subject") : @f.GetXmlProperty("genxml/subject")</b><br/>
+                            @HtmlOf(f.GetXmlProperty("genxml/message"))
+                        </div>
+                        <div class="w3-small">
+                        @{
+                            var datalist = f.XMLDoc.SelectNodes("genxml/*");
+                            if (datalist != null)
+                            {
+                                foreach (XmlNode data in datalist)
+                                {
+                                    if (!donotshow.Contains(data.Name))
+                                    {
+                                        <div>
+                                            <b>@(data.Name)</b> : @HtmlOf(data.InnerText)<br />
+                                        </div>
+                                    }
+                                }
+                            }                                
+                        }
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </td>
+        </tr>
+
+        lp += 1;
+    }
+
+</table>
+
+
+<script>
+
+    $( document ).ready(function() {
+        $(document).simplisityStartUp("/Desktopmodules/dnnrocket/api/rocket/action", { systemkey: 'rocketforms' })
+    });
+
+    function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("searchinput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("searchtable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+

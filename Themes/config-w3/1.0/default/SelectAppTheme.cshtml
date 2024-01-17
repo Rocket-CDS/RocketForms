@@ -5,13 +5,14 @@
 @using RazorEngine.Text;
 @using Rocket.AppThemes.Components;
 @using RocketPortal.Components;
+@using RocketForms.Components;
 
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocket/api/App_LocalResources/")
 @AddProcessData("resourcepath", "/DesktopModules/DNNrocketModules/RocketContentAPI/App_LocalResources/")
 
 @{
         var sessionParams = Model.SessionParamsData;
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
+    var moduleData = (ModuleFormsLimpet)Model.GetDataObject("modulesettings");
     var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
     var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
     var appThemeList = (AppThemeDataList)Model.GetDataObject("appthemedatalist");

@@ -5,13 +5,10 @@
 @using RazorEngine.Text;
 @using Rocket.AppThemes.Components;
 @using RocketPortal.Components;
+@AssigDataModel(Model)
+<!--inject-->
 
-@{
-    var moduleData = (ModuleContentLimpet)Model.GetDataObject("modulesettings");
-    var portalData = (PortalLimpet)Model.GetDataObject("portaldata");
-}
 <!-- NOTE: Load AdminDetail.cshtml with simplsity from browser, so we have the sessionParams -->
-
 <!-- create element to load settings. -->
 <span id="loadarticledetail" class="w3-hide" s-cmd="rocketforms_edit" s-fields='{"systemkey":"rocketforms","moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","tabid":"@moduleData.TabId"}'></span>
 

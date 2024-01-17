@@ -46,7 +46,7 @@ namespace RocketForms.Components
         public static string DisplayView(int portalId, string systemKey, string moduleRef, string rowKey, SessionParams sessionParam, string template = "view.cshtml", string noAppThemeReturn= "")
         {
             var cacheKey = moduleRef + template + "_" + sessionParam.CultureCode;
-            var moduleSettings = new ModuleContentLimpet(portalId, moduleRef, systemKey, sessionParam.ModuleId, sessionParam.TabId);
+            var moduleSettings = new ModuleFormsLimpet(portalId, moduleRef, systemKey, sessionParam.ModuleId, sessionParam.TabId);
             var pr = (RazorProcessResult)CacheUtils.GetCache(cacheKey, moduleRef);
             if (moduleSettings.DisableCache || pr == null)
             {

@@ -1,0 +1,71 @@
+@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI;
+@using Simplisity;
+@using RocketForms.Components;
+@using DNNrocketAPI.Components;
+@using RocketPortal.Components;
+@using System.Xml;
+@AssigDataModel(Model)
+<!--inject-->
+@{
+    var sRec = (SimplisityRecord)Model.GetDataObject("formdata");
+    string[] donotshow = { "createddate", "fileuploadlist", "fileuploadbase64", "activevalue", "simplisity_language", "simplisity_editlanguage", "simplisity_return", "browsersessionid", "browserid", "systemkey", "moduleid" };
+}
+
+<style>
+    body {
+        margin: 20px;
+        color: #595959;
+        font-size: 14px;
+        font-family: Arial, Helvetica;
+        line-height: 18px;
+    }
+
+    h2 {
+        font-size: 30px;
+        color: #242a31;
+        line-height: 30px;
+        font-family: Arial, Helvetica;
+    }
+
+    .datatable {
+        margin: 20px 0;
+        border-collapse: collapse;
+    }
+
+        .datatable td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+</style>
+
+<h2>@moduleData.GetSetting("subject")</h2>
+<table class="datatable" border="0" cellspacing="2" cellpadding="0">
+
+    @{
+        var datalist = sReco.XMLDoc.SelectNodes("genxml/*");
+        if (datalist != null)
+        {
+            foreach (XmlNode data in datalist)
+            {
+                if (!donotshow.Contains(data.Name))
+                {
+                    var labelText = ResourceKey("RocketForms." + data.Name).ToString();
+                    if (labelText == "")
+                    {
+                        labelText = ResourceKey("AppTheme." + data.Name).ToString();
+                    }
+                    if (labelText == "")
+                    {
+                        labelText = data.Name;
+                    }
+                    <tr>
+                        <td align="right"><label>@labelText</label></td>
+                        <td>@HtmlOf(data.InnerText)</td>
+                    </tr>
+                }
+            }
+        }
+    }
+
+</table>
