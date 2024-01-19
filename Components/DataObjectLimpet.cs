@@ -6,6 +6,7 @@ using Simplisity;
 using System;
 using System.Collections.Generic;
 using RocketContentAPI.Components;
+using System.Reflection;
 
 namespace RocketForms.Components
 {
@@ -36,7 +37,7 @@ namespace RocketForms.Components
             SetDataObject("portaldata", new PortalLimpet(portalid));
             SetDataObject("systemdata", SystemSingleton.Instance(SystemKey));
             SetDataObject("appthemeprojects", AppThemeUtils.AppThemeProjects());
-            SetDataObject("userparams", new UserParams(UserUtils.GetCurrentUserId()));
+            SetDataObject("userparams", new UserParams("ModuleID:" + moduleSettings.ModuleId, true));
 
         }
         public void SetDataObject(String key, object value)

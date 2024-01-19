@@ -139,10 +139,10 @@
     <value>Send enabled</value>
   </data>
   <data name="emailsentmessage.Msg" xml:space="preserve">
-    <value>The form has been successfully sent.</value>
+    <value>Your message has been received, thank you for contacting us!</value>
   </data>
   <data name="emailsentmessage.Text" xml:space="preserve">
-    <value>Form message sent</value>
+    <value>Sent Message</value>
   </data>
   <data name="fromemail.Text" xml:space="preserve">
     <value>Sender</value>
@@ -179,5 +179,14 @@
   </data>
   <data name="tel.Text" xml:space="preserve">
     <value>Tel.</value>
+  </data>
+  <data name="emailfailmessage.Msg" xml:space="preserve">
+    <value>Whoops!  Something went wrong, please try again.</value>
+  </data>
+  <data name="emailfailmessage.Text" xml:space="preserve">
+    <value>Email Error Message </value>
+  </data>
+  <data name="manageremailempty.Text" xml:space="preserve">
+    <value>No email will be sent if the recipient email is empty.</value>
   </data>
 </root>

@@ -9,7 +9,7 @@
 <!--inject-->
 @{
     var sRec = (SimplisityRecord)Model.GetDataObject("formdata");
-    string[] donotshow = { "createddate", "fileuploadlist", "fileuploadbase64", "activevalue", "simplisity_language", "simplisity_editlanguage", "simplisity_return", "browsersessionid", "browserid", "systemkey", "moduleid" };
+    string[] donotshow = { "genxml", "createddate", "fileuploadlist", "fileuploadbase64", "activevalue", "simplisity_language", "simplisity_editlanguage", "simplisity_return", "browsersessionid", "browserid", "systemkey", "moduleid" };
 }
 
 <style>
@@ -43,7 +43,7 @@
 <table class="datatable" border="0" cellspacing="2" cellpadding="0">
 
     @{
-        var datalist = sReco.XMLDoc.SelectNodes("genxml/*");
+        var datalist = sRec.XMLDoc.SelectNodes("genxml/*");
         if (datalist != null)
         {
             foreach (XmlNode data in datalist)
@@ -68,4 +68,4 @@
         }
     }
 
-</table>
+</table>                    

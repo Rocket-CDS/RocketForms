@@ -6,6 +6,7 @@ using Simplisity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace RocketForms.Components
@@ -56,6 +57,26 @@ namespace RocketForms.Components
             return "";
         }
 
+
+        /// <summary>
+        /// Displays a "Post" button with delay.  This is to avoid unwanted robot posts.
+        /// </summary>
+        /// <param name="sModel">Model</param>
+        /// <param name="spost">jquery selector of post element (element wrapper id)</param>
+        /// <param name="millisec"> time of delay until display</param>
+        /// <param name="template">razor template</param>
+        /// <returns>html for delayed display button</returns>
+        public IEncodedString DelayFormButton(SimplisityRazor sModel, string spost, int millisec = 1200, string template = "DelayFormButton.cshtml")
+        {
+            sModel.SetSetting("spost", spost);
+            var appTheme = (AppThemeLimpet)sModel.GetDataObject("apptheme");
+            var appThemeSystem = (AppThemeSystemLimpet)sModel.GetDataObject("appthemesystem");
+            var razorTempl = appTheme.GetTemplate(template, sModel.SessionParamsData.ModuleRef);
+            if (razorTempl == "") razorTempl = appThemeSystem.GetTemplate(template, sModel.SessionParamsData.ModuleRef);
+            var pr = RenderRazorUtils.RazorProcessData(razorTempl, null, sModel.DataObjects, sModel.Settings, sModel.SessionParamsData, true);
+            if (pr.StatusCode != "00") return new RawString("DelayFormButton Razor Token.  : " + pr.ErrorMsg);
+            return new RawString(pr.RenderedText);
+        }
 
     }
 }

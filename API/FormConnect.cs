@@ -105,9 +105,12 @@ namespace RocketForms.API
             {
                 var fileMapPath = folderPath + "\\" + filename;
                 FileUtils.SaveFile(fileMapPath, dataSave);
-                SendEmailForm(_portalId, fileMapPath);
+                var emailsent = SendEmailForm(_portalId, fileMapPath);
+                var template = "SentMessage.cshtml";
+                if (!emailsent) template = "SentErrMessage.cshtml";
                 var portalContent = new PortalContentLimpet(_portalId, _sessionParams.CultureCodeEdit); // Portal 0 is admin, editing portal setup
-                var razorTempl = _dataObject.AppTheme.GetTemplate("SentMessage.cshtml", _dataObject.ModuleSettings.ModuleRef);
+                var razorTempl = _dataObject.AppTheme.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
+                if (razorTempl == "") razorTempl = _dataObject.AppThemeSystem.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
                 var pr = RenderRazorUtils.RazorProcessData(razorTempl, _postInfo, _dataObject.DataObjects, null, _sessionParams, true);
                 if (pr.StatusCode != "00") return pr.ErrorMsg;
                 return pr.RenderedText;
@@ -167,7 +170,7 @@ namespace RocketForms.API
             sRec.XMLData = sRecDecode.XMLData;
             return sRec;
         }
-        public void SendEmailForm(int portalid, string fileMapPath)
+        public bool SendEmailForm(int portalid, string fileMapPath)
         {
             var rtnRecord = ReadFileRecord(fileMapPath);
             if (rtnRecord != null)
@@ -187,15 +190,16 @@ namespace RocketForms.API
                     else
                         FileUtils.SaveFile(emailfilename, pr.RenderedText);
                 }
-                if (pr.StatusCode == "00" && _dataObject.ModuleSettings.GetSettingBool("emailon"))
+                if (pr.StatusCode == "00" && _dataObject.ModuleSettings.GetSetting("manageremail") != "")
                 {
                     var eFunc = new EmailLimpet(portalid, _sessionParams.CultureCode);
                     var replyEmail = rtnRecord.GetXmlProperty("genxml/textbox/email");
                     if (replyEmail == "") replyEmail = rtnRecord.GetXmlProperty("genxml/textbox/replytoemail");
                     if (replyEmail == "") replyEmail = _dataObject.ModuleSettings.GetSetting("manageremail");
-                    eFunc.SendEmail(pr.RenderedText, _dataObject.ModuleSettings.GetSetting("fromemail"), _dataObject.ModuleSettings.GetSetting("manageremail"), replyEmail, _dataObject.ModuleSettings.GetSetting("subject"));
+                    return eFunc.SendEmail(pr.RenderedText, _dataObject.ModuleSettings.GetSetting("fromemail"), _dataObject.ModuleSettings.GetSetting("manageremail"), replyEmail, _dataObject.ModuleSettings.GetSetting("subject"));
                 }
             }
+            return false;
         }
 
     }

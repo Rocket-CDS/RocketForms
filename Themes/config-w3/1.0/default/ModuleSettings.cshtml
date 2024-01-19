@@ -68,17 +68,20 @@
         <div class="w3-row w3-padding">
             <label class="w3-text-grey">@ResourceKey("RocketForms.manageremail")</label>
             @TextBox(info, "genxml/settings/manageremail", " class='w3-input w3-border'")
-        </div>
-        <div class="w3-row w3-padding">
-            @CheckBox(info, "genxml/settings/emailon", ResourceKey("RocketForms.emailon").ToString(), " class='w3-check'", true)
+            <div class="w3-tiny"><i>@ResourceKey("RocketForms.manageremailempty")</i></div>
         </div>
 
         <!-- Settings records are not localized, so use mulitple fields based on valid languages -->
         @foreach (var l in DNNrocketUtils.GetCultureCodeList())
         {
+            <div class="w3-xlarge">@DNNrocketUtils.GetCultureCodeName(l) @DisplayFlag(l)</div>
             <div class="w3-row w3-padding">
                 <label class="w3-text-grey">@ResourceKey("RocketForms.emailsentmessage")</label>&nbsp;@DisplayFlag(l)
                 <div>@TextArea(info, "genxml/settings/emailsentmessage" + l, "rows='4'  class='w3-input w3-border'", ResourceKey("RocketForms.emailsentmessage", l, "Msg").ToString())</div>
+            </div>
+            <div class="w3-row w3-padding">
+                <label class="w3-text-grey">@ResourceKey("RocketForms.emailfailmessage")</label>&nbsp;@DisplayFlag(l)
+                <div>@TextArea(info, "genxml/settings/emailfailmessage" + l, "rows='4'  class='w3-input w3-border'", ResourceKey("RocketForms.emailfailmessage", l, "Msg").ToString())</div>
             </div>
         }
 
@@ -90,6 +93,8 @@
         </div>
 
 </div>
+
+@RenderXml(info)
 
 <div class="w3-row w3-padding w3-tiny">
     <span>ModuleRef: @moduleData.ModuleRef</span>

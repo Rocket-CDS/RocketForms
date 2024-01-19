@@ -1,0 +1,66 @@
+﻿@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketForms.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using Rocket.AppThemes.Components;
+@using RocketPortal.Components;
+
+@AssigDataModel(Model)
+
+<div id="buttondiv@(moduleData.ModuleId)" class="rocket-postbutton simplisity_panel" style="min-height:40px;">
+</div>
+<!-- we must pass moduleid to server -->
+@HiddenField(infoempty, "genxml/hidden/moduleid", "", moduleData.ModuleId.ToString())
+
+<div class="simplisity_loader" style="display:none;">
+    <span class=" simplisity_loader_inner">
+    </span>
+</div>
+
+<script>
+    $( document ).ready(function() {
+
+        setTimeout(function(){
+            var buttontext = '<div id="sendemail@(moduleData.ModuleId)" class="w3-button w3-theme-action w3-border a-dovalidate simplisity_click" s-before="validateFom@(moduleData.ModuleId)" s-return="#buttondiv@(moduleData.ModuleId)"  s-cmdurl="/Desktopmodules/dnnrocket/api/rocket/action" s-cmd="rocketforms_publicpostform"  s-post="@(Model.GetSetting("spost"))" >@ResourceKey("RocketForms.send")</div>'
+            $('#buttondiv@(moduleData.ModuleId)').html(buttontext);
+            $('@(Model.GetSetting("spost"))').activateSimplisityPanel();
+        }, 1200);
+
+    });
+
+    function validateFom@(moduleData.ModuleId)() {
+        $('.simplisity_loader').show();
+        var form = $("#Form");
+        form.validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true
+                },
+            },
+            errorPlacement: function () {
+                return false;  // suppresses error message text
+            },
+            invalidHandler: function (e, validator) {
+                $('input').removeClass('w3-pale-red');
+                $('input').removeClass('w3-border-red');
+                for (var i in validator.errorMap) {
+                    $('#' + i).addClass('w3-pale-red');
+                    $('#' + i).addClass('w3-border-red')
+                }
+            },
+            amount: {
+                required: true,
+                digits: true
+            },
+        });
+        if (!form.valid()) {
+            $('.a-dovalidate').attr('s-stop', 'stop')
+        }
+    }
+
+</script>
+
+
+
