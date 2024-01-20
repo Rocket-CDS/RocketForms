@@ -180,4 +180,16 @@
   <data name="tel.Text" xml:space="preserve">
     <value>Tél.</value>
   </data>
+  <data name="emailfailmessage.Msg" xml:space="preserve">
+    <value>Oups !  Un problème s'est produit, veuillez réessayer.</value>
+  </data>
+  <data name="emailfailmessage.Text" xml:space="preserve">
+    <value>Message d'erreur par courriel</value>
+  </data>
+  <data name="manageremailempty.Text" xml:space="preserve">
+    <value>Aucun courriel ne sera envoyé si l'adresse électronique du destinataire est vide.</value>
+  </data>
+  <data name="delete90.Text" xml:space="preserve">
+    <value>Les données datant de plus de 90 jours ont été supprimées.</value>
+  </data>
 </root>

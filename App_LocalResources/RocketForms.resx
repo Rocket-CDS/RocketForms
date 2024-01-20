@@ -189,4 +189,7 @@
   <data name="manageremailempty.Text" xml:space="preserve">
     <value>No email will be sent if the recipient email is empty.</value>
   </data>
+  <data name="delete90.Text" xml:space="preserve">
+    <value>Data older than 90 days has been deleted.</value>
+  </data>
 </root>

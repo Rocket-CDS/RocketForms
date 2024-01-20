@@ -51,6 +51,9 @@ namespace RocketForms.API
                 var formlist = new List<SimplisityRecord>();
                 var folderPath = PortalUtils.HomeDirectoryMapPath(_portalId) + "\\DNNrocket\\" + _dataObject.SystemKey + "\\" + _dataObject.ModuleSettings.ModuleRef;
                 if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
+                DNNrocketUtils.DeleteOldFiles(folderPath, 90);
+
                 var l = Directory.GetFiles(folderPath).OrderByDescending(i => i);
                 foreach (var f in l)
                 {
@@ -75,6 +78,9 @@ namespace RocketForms.API
             //Save To DISK.  Save all post to disk (NOT DB, to stop SQL inject).  Also encode XML as Base64.
             var folderPath = PortalUtils.HomeDirectoryMapPath(_portalId) + "\\DNNrocket\\" + _dataObject.SystemKey + "\\" + _dataObject.ModuleSettings.ModuleRef;
             if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
+            DNNrocketUtils.DeleteOldFiles(folderPath,90);
+
             // remove any hack injection
             var dList = _postInfo.ToDictionary();
             var rtnRecord = new SimplisityRecord();
