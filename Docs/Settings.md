@@ -8,13 +8,7 @@ The is the email address that the form email will be sent to.
 
 ## ReplyTo Email 
 
-The replyto email will be sent linked to the email sent to the manager, so they can reply easily to the email.  There should be a field in the form which defines what the replyto email is.  
-If this input field on the form does not exists then the manager email is used, to prevent spam issues with the SMTP server.
-
-```
-@TextBox(info, "genxml/textbox/email", "type='email' required")
-```
-or
+The replyto email will be set to the email of the manager unless a "replytoemail" field exists int he settings.  
 ```
 @TextBox(info, "genxml/textbox/replytoemail", "type='email' required")
 ```

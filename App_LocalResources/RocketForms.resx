@@ -145,7 +145,7 @@
     <value>Sent Message</value>
   </data>
   <data name="fromemail.Text" xml:space="preserve">
-    <value>Sender</value>
+    <value>From and ReplyTo email.</value>
   </data>
   <data name="fromemailerror.Text" xml:space="preserve">
     <value>No parameter for the module</value>

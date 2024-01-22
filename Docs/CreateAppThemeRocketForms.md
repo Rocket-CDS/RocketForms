@@ -44,55 +44,50 @@ Create a file called "**View.cshtml**" with this content...
     <div id="buttondiv@(moduleData.ModuleId)" class="w3-center w3-margin simplisity_panel" style="min-height:40px;">
         <div class="w3-button w3-green">@ResourceKey("RocketForms.send")</div>
     </div>
-    <!-- we must pass moduleid to server -->
-    @HiddenField(infoempty, "genxml/hidden/moduleid","",moduleData.ModuleId.ToString())
+
+    @DelayFormButton(Model, "#contactform" + moduleData.ModuleId)
+
 </div>
-
-<div class="simplisity_loader" style="display:none;">
-    <span class=" simplisity_loader_inner">
-    </span>
-</div>
-
-<script>
-    $( document ).ready(function() {
-
-        setTimeout(function(){
-            var buttontext = '<button id="sendemail@(moduleData.ModuleId)" type="button" class="w3-button w3-green simplisity_click" s-before="move@(moduleData.ModuleId)" s-return="#buttondiv@(moduleData.ModuleId)"  s-cmdurl="/Desktopmodules/dnnrocket/api/rocket/action" s-cmd="rocketforms_publicpostform"  s-post="#contactform@(moduleData.ModuleId)" >@ResourceKey("RocketForms.send")</button>'
-            $('#buttondiv@(moduleData.ModuleId)').html(buttontext);
-
-            $('#contactform@(moduleData.ModuleId)').activateSimplisityPanel();
-
-        }, 1200);
-
-    });
-
-    function move@(moduleData.ModuleId)() {
-        $('.simplisity_loader').show();
-    }
-</script>
-
 ```
 
+### Other Optional Templates
 
-### Other templates
+**ViewFirstHeader.cshtml** (Optional)  
+This template is injected into the view page header before any other template.  This is usually JQuery validation langauge settings
+```
+@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using RocketForms.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using Rocket.AppThemes.Components;
+@using RocketPortal.Components;
 
-**AdminFirstHeader.cshtml**  
+@AssigDataModel(Model)
+<!--inject-->
+@{
+    if (DNNrocketUtils.GetCurrentLanguageCode() != "en")
+    {
+        <script type="text/javascript" src="/DesktopModules/DNNrocket/js/localization/messages_@(DNNrocketUtils.GetCurrentLanguageCode()).js"></script>
+    }
+}
+```
+**ViewLastHeader.cshtml** (Optional)  
+Injected into the view page header after any other template.  
+
+**ThemeSettings.cshtml**  (Optional)  
+Used to get user settings for the AppTheme.
+
+**EmailForm.cshtml**  (Optional)  
+Defines the bespoke email that will be sent.  If no EmailForm.cshtml is defined in the AppTheme a system level generic email will be sent.  
+
+### Admin Templates
+
+**AdminFirstHeader.cshtml** (Optional)  
 This template is injected into the admin page header before any other template.  
 
-**AdminLastHeader.cshtml**  
+**AdminLastHeader.cshtml** (Optional)  
 This template is injected into the admin page header after any other template.
-
-**ViewFirstHeader.cshtml**  
-This template is injected into the view page header before any other template.  
-
-**ViewLastHeader.cshtml**  
-This template is injected into the view page header after any other template.  
-
-**ThemeSettings.cshtml**  
-This template is used to get user settings for the AppTheme.
-
-### Admin Templates (optonal)
-
 
 *note: All admin templates use the w3.css framework, which is automatically added to the page by the rocketforms.system.*  
 [https://www.w3schools.com/w3css/](https://www.w3schools.com/w3css/)  
@@ -102,6 +97,6 @@ This template is used to get user settings for the AppTheme.
 
 Add a page on the RocketCDS website and add the RocketForms module.
 
-Go into the settings and selected the "ContactForm" Apptheme.
+Go into the settings and selected the AppTheme.
 
 
