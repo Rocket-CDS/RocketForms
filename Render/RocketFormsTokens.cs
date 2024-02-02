@@ -5,6 +5,7 @@ using RocketPortal.Components;
 using Simplisity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
@@ -77,6 +78,35 @@ namespace RocketForms.Components
             if (pr.StatusCode != "00") return new RawString("DelayFormButton Razor Token.  : " + pr.ErrorMsg);
             return new RawString(pr.RenderedText);
         }
+        public string ResourceKey(AppThemeLimpet appTheme, String resourceKey, String lang = "", String resourceExtension = "Text")
+        {
+            var strOut = "";
+            if (Processdata.ContainsKey("resourcepath"))
+            {
+                var resxlist = new List<string>();
+                resxlist.Add("RocketForms");
+                foreach (var f in appTheme.GetTemplatesResx())
+                {
+                    var fKey = f.Key.Split('.')[0].ToLower();
+                    if (!resxlist.Contains(fKey)) resxlist.Add(fKey);
+                }
+
+                var l = Processdata["resourcepath"];
+                foreach (var r in l)
+                {
+                    foreach (var rf in resxlist)
+                    {
+                        var resourceFileKey = rf + "." + resourceKey;
+                        strOut = DNNrocketUtils.GetResourceString(r, resourceFileKey, resourceExtension, lang);
+                        if (strOut != "") break;
+                    }
+                    if (strOut != "") break;
+                }
+            }
+            if (strOut == "") strOut = resourceKey;
+            return strOut;
+        }
+
 
     }
 }

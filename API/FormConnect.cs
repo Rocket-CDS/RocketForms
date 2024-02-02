@@ -82,7 +82,9 @@ namespace RocketForms.API
             DNNrocketUtils.DeleteOldFiles(folderPath,90);
 
             // remove any hack injection
-            var dList = _postInfo.ToDictionary();
+            var dRec = (SimplisityInfo)_postInfo.CloneInfo();
+            dRec.RemoveXmlNode("genxml/hidden");
+            var dList = dRec.ToDictionary();
             var rtnRecord = new SimplisityRecord();
             rtnRecord.SetXmlProperty("genxml/data/createddate", DateTime.Now.ToString("O"), TypeCode.DateTime);
 
@@ -117,7 +119,7 @@ namespace RocketForms.API
                 var portalContent = new PortalContentLimpet(_portalId, _sessionParams.CultureCodeEdit); // Portal 0 is admin, editing portal setup
                 var razorTempl = _dataObject.AppTheme.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
                 if (razorTempl == "") razorTempl = _dataObject.AppThemeSystem.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
-                var pr = RenderRazorUtils.RazorProcessData(razorTempl, _postInfo, _dataObject.DataObjects, null, _sessionParams, true);
+                var pr = RenderRazorUtils.RazorProcessData(razorTempl, dRec, _dataObject.DataObjects, null, _sessionParams, true);
                 if (pr.StatusCode != "00") return pr.ErrorMsg;
                 return pr.RenderedText;
             }

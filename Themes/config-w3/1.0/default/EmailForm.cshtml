@@ -9,7 +9,7 @@
 <!--inject-->
 @{
     var sRec = (SimplisityRecord)Model.GetDataObject("formdata");
-    string[] donotshow = { "genxml", "createddate", "fileuploadlist", "fileuploadbase64", "activevalue", "simplisity_language", "simplisity_editlanguage", "simplisity_return", "browsersessionid", "browserid", "systemkey", "moduleid" };
+    string[] donotshow = { "genxml", "basesystemkey", "admintabid", "createddate", "fileuploadlist", "fileuploadbase64", "activevalue", "simplisity_language", "simplisity_editlanguage", "simplisity_return", "browsersessionid", "browserid", "systemkey", "moduleid" };
 }
 
 <style>
@@ -50,17 +50,8 @@
             {
                 if (!donotshow.Contains(data.Name))
                 {
-                    var labelText = ResourceKey("RocketForms." + data.Name).ToString();
-                    if (labelText == "")
-                    {
-                        labelText = ResourceKey("AppTheme." + data.Name).ToString();
-                    }
-                    if (labelText == "")
-                    {
-                        labelText = data.Name;
-                    }
                     <tr>
-                        <td align="right"><label>@labelText</label></td>
+                        <td align="right"><label>@ResourceKey(appTheme, data.Name)</label></td>
                         <td>@HtmlOf(data.InnerText)</td>
                     </tr>
                 }
