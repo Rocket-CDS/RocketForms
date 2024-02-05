@@ -24,7 +24,7 @@
             <td>
                 <div class="w3-row w3-card">
                     <div class="w3-row w3-padding w3-hover-light-grey" onclick="$('.formmessage@(lp)').toggle()">
-                        <b>@f.GetXmlPropertyDate("genxml/createddate").ToShortDateString() @f.GetXmlPropertyDate("genxml/createddate").ToShortTimeString() &nbsp;:&nbsp; @f.GetXmlProperty("genxml/email")</b> &nbsp; @f.GetXmlProperty("genxml/company"), @f.GetXmlProperty("genxml/name"), @ResourceKey("RocketForms.tel"): @f.GetXmlProperty("genxml/tel")
+                        <b>@f.GetXmlPropertyDate("genxml/createddate").ToShortDateString() @f.GetXmlPropertyDate("genxml/createddate").ToShortTimeString() &nbsp;:&nbsp; @f.GetXmlProperty("genxml/email")</b> &nbsp; @HtmlOf(f.GetXmlProperty("genxml/company")), @HtmlOf(f.GetXmlProperty("genxml/name")), @ResourceKey("RocketForms.tel"): @f.GetXmlProperty("genxml/tel")
 
                         <div class="w3-button w3-right w3-small simplisity_click" s-cmd="rocketforms_delete" s-fields='{"formref":"@(f.GUIDKey)","moduleref":"@moduleData.ModuleRef","moduleid":"@moduleData.ModuleId","tabid":"@moduleData.TabId"}'>
                             @ButtonIcon(ButtonTypes.delete)
@@ -35,7 +35,7 @@
                     </div>
                     <div class="w3-row w3-padding w3-pale-yellow formmessage@(lp)" style="display:none;">
                         <div class="w3-margin-bottom">
-                            <b>@ResourceKey("RocketForms.subject") : @f.GetXmlProperty("genxml/subject")</b><br/>
+                            <b>@ResourceKey("RocketForms.subject") : @HtmlOf(f.GetXmlProperty("genxml/subject"))</b><br/>
                             @HtmlOf(f.GetXmlProperty("genxml/message"))
                         </div>
                         <div class="w3-small">

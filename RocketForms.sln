@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RocketPortal", "..\..\DNNro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RocketContentAPI", "..\RocketContentAPI\RocketContentAPI.csproj", "{B6BB363F-B606-41BA-BFC3-CDFA9533D3FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketFormsMod", "..\..\RocketModules\RocketFormsMod\RocketFormsMod.csproj", "{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Comp All|Any CPU = Comp All|Any CPU
@@ -62,6 +64,16 @@ Global
 		{B6BB363F-B606-41BA-BFC3-CDFA9533D3FB}.Razor|Any CPU.Build.0 = Release|Any CPU
 		{B6BB363F-B606-41BA-BFC3-CDFA9533D3FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6BB363F-B606-41BA-BFC3-CDFA9533D3FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.Comp All|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.Comp All|Any CPU.Build.0 = Debug|Any CPU
+		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.CompAll|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.CompAll|Any CPU.Build.0 = Debug|Any CPU
+		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.Razor|Any CPU.ActiveCfg = Release|Any CPU
+		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.Razor|Any CPU.Build.0 = Release|Any CPU
+		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
