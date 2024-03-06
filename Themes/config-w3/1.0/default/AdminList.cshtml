@@ -48,7 +48,7 @@
                                     if (!donotshow.Contains(data.Name))
                                     {
                                         <div>
-                                            <b>@ResourceKey(appTheme, data.Name)</b> : @HtmlOf(data.InnerText)<br />
+                                            <b>@HtmlOf(ResourceKey(appTheme, data.Name))</b> : @HtmlOf(data.InnerText)<br />
                                         </div>
                                     }
                                 }
