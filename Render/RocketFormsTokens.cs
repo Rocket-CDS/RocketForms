@@ -34,6 +34,12 @@ namespace RocketForms.Components
 
         public string AssigDataModel(SimplisityRazor sModel)
         {
+            AssignDataModel(sModel);
+            return "";
+        }
+
+        public string AssignDataModel(SimplisityRazor sModel)
+        {
             appTheme = (AppThemeLimpet)sModel.GetDataObject("apptheme");
             appThemeSystem = (AppThemeSystemLimpet)sModel.GetDataObject("appthemesystem");
             systemData = (SystemLimpet)sModel.GetDataObject("systemdata");

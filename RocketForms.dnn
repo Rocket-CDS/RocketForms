@@ -2,7 +2,7 @@
 	<packages>
     
 		<package name="RocketForms" type="Library" version="1.0.3">
-			<friendlyName>RocketForms Nevoweb</friendlyName>
+			<friendlyName>RocketForms</friendlyName>
 			<DefinitionName>RocketForms</DefinitionName>
 			<description>RocketForms</description>
       <iconFile></iconFile>

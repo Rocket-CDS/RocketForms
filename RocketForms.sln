@@ -15,6 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RocketContentAPI", "..\Rock
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketFormsMod", "..\..\RocketModules\RocketFormsMod\RocketFormsMod.csproj", "{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5D92E550-F9F4-4136-9938-9E70560B4F81}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\dnnpack.config = ..\..\dnnpack.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Comp All|Any CPU = Comp All|Any CPU
