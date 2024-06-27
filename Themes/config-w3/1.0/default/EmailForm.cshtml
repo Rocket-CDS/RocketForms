@@ -10,6 +10,7 @@
 @{
     var sRec = (SimplisityRecord)Model.GetDataObject("formdata");
     string[] donotshow = { "genxml", "basesystemkey", "admintabid", "createddate", "fileuploadlist", "fileuploadbase64", "activevalue", "simplisity_language", "simplisity_editlanguage", "simplisity_return", "browsersessionid", "browserid", "systemkey", "moduleid" };
+    var emaillanguage = moduleData.GetSetting("emaillanguage");
 }
 
 <style>
@@ -38,7 +39,7 @@ h2 {
         {
             if (!donotshow.Contains(data.Name))
             {
-                <strong>@HtmlOf(ResourceKey(appTheme, data.Name)) : </strong>@HtmlOf(data.InnerText)<br />
+                <strong>@HtmlOf(ResourceKey(appTheme, data.Name, emaillanguage)) : </strong>@HtmlOf(data.InnerText)<br />
             }
         }
     }

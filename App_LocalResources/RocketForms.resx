@@ -192,4 +192,7 @@
   <data name="delete90.Text" xml:space="preserve">
     <value>Data older than 90 days has been deleted.</value>
   </data>
+  <data name="emaillanguage.Text" xml:space="preserve">
+    <value>Email Language</value>
+  </data>
 </root>
