@@ -200,11 +200,12 @@ namespace RocketForms.API
                 }
                 if (pr.StatusCode == "00" && _dataObject.ModuleSettings.GetSetting("manageremail") != "")
                 {
+                    var emailsubjectprefix = rtnRecord.GetXmlProperty("genxml/hidden/emailsubjectprefix");
                     var eFunc = new EmailLimpet(portalid, _sessionParams.CultureCode);
                     var replyEmail = rtnRecord.GetXmlProperty("genxml/textbox/email");
                     if (replyEmail == "") replyEmail = rtnRecord.GetXmlProperty("genxml/textbox/replytoemail");
                     if (replyEmail == "") replyEmail = _dataObject.ModuleSettings.GetSetting("manageremail");
-                    return eFunc.SendEmail(pr.RenderedText, _dataObject.ModuleSettings.GetSetting("fromemail"), _dataObject.ModuleSettings.GetSetting("manageremail"), replyEmail, _dataObject.ModuleSettings.GetSetting("subject"));
+                    return eFunc.SendEmail(pr.RenderedText, _dataObject.ModuleSettings.GetSetting("fromemail"), _dataObject.ModuleSettings.GetSetting("manageremail"), replyEmail, emailsubjectprefix + _dataObject.ModuleSettings.GetSetting("subject"));
                 }
             }
             return false;
