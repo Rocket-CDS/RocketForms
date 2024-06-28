@@ -5,6 +5,7 @@
 @using DNNrocketAPI.Components;
 @using RocketPortal.Components;
 @using System.Xml;
+@using System.Globalization;
 @AssigDataModel(Model)
 <!--inject-->
 @{
@@ -39,7 +40,16 @@ h2 {
         {
             if (!donotshow.Contains(data.Name))
             {
-                <strong>@HtmlOf(ResourceKey(appTheme, data.Name, emaillanguage)) : </strong>@HtmlOf(data.InnerText)<br />
+                DateTime dateValue;
+                if (data.Name.ToLower().Contains("date") && DateTime.TryParse(data.InnerText, out dateValue))
+                {
+                    string formattedDate = dateValue.ToString("D", new CultureInfo(emaillanguage));
+                    <strong>@HtmlOf(ResourceKey(appTheme, data.Name, emaillanguage)) : </strong>@(formattedDate)<br />
+                }
+                else
+                {
+                    <strong>@HtmlOf(ResourceKey(appTheme, data.Name, emaillanguage)) : </strong>@HtmlOf(data.InnerText)<br />
+                }
             }
         }
     }
