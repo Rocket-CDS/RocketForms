@@ -83,6 +83,11 @@ namespace RocketForms.API
 
             // remove any hack injection
             var dRec = (SimplisityInfo)_postInfo.CloneInfo();
+
+            //move the "emailsubjectprefix" to a textbox, so it is saved.
+            var emailsubjectprefix = dRec.GetXmlProperty("genxml/hidden/emailsubjectprefix");
+            dRec.SetXmlProperty("genxml/textbox/emailsubjectprefix", emailsubjectprefix);
+
             dRec.RemoveXmlNode("genxml/hidden");
             var dList = dRec.ToDictionary();
             var rtnRecord = new SimplisityRecord();
@@ -200,10 +205,10 @@ namespace RocketForms.API
                 }
                 if (pr.StatusCode == "00" && _dataObject.ModuleSettings.GetSetting("manageremail") != "")
                 {
-                    var emailsubjectprefix = rtnRecord.GetXmlProperty("genxml/hidden/emailsubjectprefix");
+                    var emailsubjectprefix = rtnRecord.GetXmlProperty("genxml/emailsubjectprefix");
                     var eFunc = new EmailLimpet(portalid, _sessionParams.CultureCode);
-                    var replyEmail = rtnRecord.GetXmlProperty("genxml/textbox/email");
-                    if (replyEmail == "") replyEmail = rtnRecord.GetXmlProperty("genxml/textbox/replytoemail");
+                    var replyEmail = rtnRecord.GetXmlProperty("genxml/email");
+                    if (replyEmail == "") replyEmail = rtnRecord.GetXmlProperty("genxml/replytoemail");
                     if (replyEmail == "") replyEmail = _dataObject.ModuleSettings.GetSetting("manageremail");
                     return eFunc.SendEmail(pr.RenderedText, _dataObject.ModuleSettings.GetSetting("fromemail"), _dataObject.ModuleSettings.GetSetting("manageremail"), replyEmail, emailsubjectprefix + _dataObject.ModuleSettings.GetSetting("subject"));
                 }
