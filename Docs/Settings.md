@@ -15,3 +15,6 @@ The replyto email will be set to the email of the manager unless a "replytoemail
 
 ## Copy to the sender
 Copying the email to the sender has been disabled, this is to prevent spam issues with the SMTP server used to send the form.  
+
+## Email Language
+The language that the email will be sent.  Default is en-US.
