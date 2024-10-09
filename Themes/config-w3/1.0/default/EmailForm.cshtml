@@ -10,7 +10,7 @@
 <!--inject-->
 @{
     var sRec = (SimplisityRecord)Model.GetDataObject("formdata");
-    string[] donotshow = { "genxml", "basesystemkey", "admintabid", "createddate", "fileuploadlist", "fileuploadbase64", "activevalue", "simplisity_language", "simplisity_editlanguage", "simplisity_return", "browsersessionid", "browserid", "systemkey", "moduleid" };
+    string[] donotshow = { "genxml", "basesystemkey", "admintabid", "createddate", "fileuploadlist", "fileuploadbase64", "activevalue", "simplisity_language", "simplisity_editlanguage", "simplisity_return", "browsersessionid", "browserid", "systemkey", "moduleid", "emailsubjectprefix" };
     var emaillanguage = moduleData.GetSetting("emaillanguage");
     if (emaillanguage == "") 
     {
