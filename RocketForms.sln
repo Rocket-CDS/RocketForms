@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\..\dnnpack.config = ..\..\dnnpack.config
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppThemes", "..\..\DNNrocket\RocketAppTheme\AppThemes.csproj", "{D7CCBA50-3C7E-4981-9138-727C16EC60A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Comp All|Any CPU = Comp All|Any CPU
@@ -79,6 +81,16 @@ Global
 		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.Razor|Any CPU.Build.0 = Release|Any CPU
 		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BB4277A-A2B0-416A-9D0F-167D0DB0507C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7CCBA50-3C7E-4981-9138-727C16EC60A0}.Comp All|Any CPU.ActiveCfg = Comp All|Any CPU
+		{D7CCBA50-3C7E-4981-9138-727C16EC60A0}.Comp All|Any CPU.Build.0 = Comp All|Any CPU
+		{D7CCBA50-3C7E-4981-9138-727C16EC60A0}.CompAll|Any CPU.ActiveCfg = CompAll|Any CPU
+		{D7CCBA50-3C7E-4981-9138-727C16EC60A0}.CompAll|Any CPU.Build.0 = CompAll|Any CPU
+		{D7CCBA50-3C7E-4981-9138-727C16EC60A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7CCBA50-3C7E-4981-9138-727C16EC60A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7CCBA50-3C7E-4981-9138-727C16EC60A0}.Razor|Any CPU.ActiveCfg = Razor|Any CPU
+		{D7CCBA50-3C7E-4981-9138-727C16EC60A0}.Razor|Any CPU.Build.0 = Razor|Any CPU
+		{D7CCBA50-3C7E-4981-9138-727C16EC60A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7CCBA50-3C7E-4981-9138-727C16EC60A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
