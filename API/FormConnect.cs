@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
@@ -206,11 +207,15 @@ namespace RocketForms.API
                 if (pr.StatusCode == "00" && _dataObject.ModuleSettings.GetSetting("manageremail") != "")
                 {
                     var emailsubjectprefix = rtnRecord.GetXmlProperty("genxml/emailsubjectprefix");
+                    var emailsubjectappendix = rtnRecord.GetXmlProperty("genxml/emailsubjectappendix");
                     var eFunc = new EmailLimpet(portalid, _sessionParams.CultureCode);
-                    var replyEmail = rtnRecord.GetXmlProperty("genxml/email");
-                    if (replyEmail == "") replyEmail = rtnRecord.GetXmlProperty("genxml/replytoemail");
+                    var replyEmail = rtnRecord.GetXmlProperty("genxml/replytoemail");
+                    if (replyEmail == "") replyEmail = rtnRecord.GetXmlProperty("genxml/email");
                     if (replyEmail == "") replyEmail = _dataObject.ModuleSettings.GetSetting("manageremail");
-                    return eFunc.SendEmail(pr.RenderedText, _dataObject.ModuleSettings.GetSetting("fromemail"), _dataObject.ModuleSettings.GetSetting("manageremail"), replyEmail, emailsubjectprefix + _dataObject.ModuleSettings.GetSetting("subject"));
+
+                    var subjectText = emailsubjectprefix + _dataObject.ModuleSettings.GetSetting("subject") + emailsubjectappendix;
+
+                    return eFunc.SendEmail(pr.RenderedText, _dataObject.ModuleSettings.GetSetting("fromemail"), _dataObject.ModuleSettings.GetSetting("manageremail"), replyEmail, subjectText);
                 }
             }
             return false;
