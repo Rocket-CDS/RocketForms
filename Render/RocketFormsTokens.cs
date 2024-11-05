@@ -112,6 +112,34 @@ namespace RocketForms.Components
             if (strOut == "") strOut = resourceKey;
             return strOut;
         }
+        /// <summary>
+        /// Standardized method and names to craete top,bottom,left,right padding on an element.
+        /// Allows potion adjustment from module settings without change CSS files.
+        /// field Id: leftpadding,rightpadding,toppadding,bottompadding
+        /// </summary>
+        /// <param name="sModel"></param>
+        /// <returns>The padding CSS for an inline style on an element.</returns>
+        public string StylePadding()
+        {
+            var strOut = "";
+            if (moduleData.GetSettingInt("leftpadding") > 0)
+            {
+                strOut += "padding-left:" + moduleData.GetSettingInt("leftpadding") + "px;";
+            }
+            if (moduleData.GetSettingInt("rightpadding") > 0)
+            {
+                strOut += "padding-right:" + moduleData.GetSettingInt("rightpadding") + "px;";
+            }
+            if (moduleData.GetSettingInt("toppadding") > 0)
+            {
+                strOut += "padding-top:" + moduleData.GetSettingInt("toppadding") + "px;";
+            }
+            if (moduleData.GetSettingInt("bottompadding") > 0)
+            {
+                strOut += "padding-bottom:" + moduleData.GetSettingInt("bottompadding") + "px;";
+            }
+            return strOut;
+        }
 
 
     }
