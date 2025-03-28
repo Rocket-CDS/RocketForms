@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
+using System.Xml;
 
 namespace RocketForms.API
 {
@@ -91,6 +92,21 @@ namespace RocketForms.API
 
             dRec.RemoveXmlNode("genxml/hidden");
             var dList = dRec.ToDictionary();
+            // get checkboxlist data
+            var nodList = dRec.XMLDoc.SelectNodes("genxml/*/*/chk");
+            if (nodList != null)
+            {
+                var lp = 1;
+                foreach (XmlNode nod in nodList)
+                {
+                    if (nod.Attributes["value"].InnerText.ToLower() == "true")
+                    {
+                        if (!dList.ContainsKey(nod.ParentNode.Name + lp)) dList.Add(nod.ParentNode.Name + lp, nod.Attributes["data"].InnerText);
+                        lp += 1;
+                    }
+                }
+            }
+
             var rtnRecord = new SimplisityRecord();
             rtnRecord.SetXmlProperty("genxml/data/createddate", DateTime.Now.ToString("O"), TypeCode.DateTime);
 
