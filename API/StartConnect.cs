@@ -30,6 +30,12 @@ namespace RocketForms.API
                 case "rocketforms_publicpostform":
                     strOut = PostForm();
                     break;
+                case "rocketforms_public1":
+                    strOut = PinForm();
+                    break;
+                case "rocketforms_public2":
+                    strOut = PostForm(true);
+                    break;
                 case "rocketforms_edit":
                     strOut = ListForm();
                     break;

@@ -75,7 +75,7 @@ namespace RocketForms.API
             }
         }
 
-        public string PostForm()
+        public string PostForm(bool pinform = false)
         {
             //Save To DISK.  Save all post to disk (NOT DB, to stop SQL inject).  Also encode XML as Base64.
             var folderPath = PortalUtils.HomeDirectoryMapPath(_portalId) + "\\DNNrocket\\" + _dataObject.SystemKey + "\\" + _dataObject.ModuleSettings.ModuleRef;
@@ -83,8 +83,19 @@ namespace RocketForms.API
 
             DNNrocketUtils.DeleteOldFiles(folderPath,90);
 
-            // remove any hack injection
-            var dRec = (SimplisityInfo)_postInfo.CloneInfo();
+            var dRec = new SimplisityInfo();
+            if (pinform)
+            {
+                dRec = DNNrocketUtils.GetTempStorage("rocketforms_post_" + _sessionParams.BrowserSessionId, false);
+                //dRec = DNNrocketUtils.GetTempStorage("rocketforms_post_" + _sessionParams.BrowserSessionId, true);
+
+                dRec.SetXmlProperty("genxml/hidden/pinstart", _paramInfo.GetXmlPropertyDate("genxml/hidden/requeststart").ToString("O"));
+                dRec.SetXmlProperty("genxml/hidden/pinend", _paramInfo.GetXmlPropertyDate("genxml/hidden/requestdone").ToString("O"));
+
+                // [TODO: check for robot]
+            }
+            else
+                dRec = (SimplisityInfo)_postInfo.CloneInfo();
 
             //move the "emailsubjectprefix" to a textbox, so it is saved.
             var emailsubjectprefix = dRec.GetXmlProperty("genxml/hidden/emailsubjectprefix");
@@ -137,8 +148,7 @@ namespace RocketForms.API
                 FileUtils.SaveFile(fileMapPath, dataSave);
                 var emailsent = SendEmailForm(_portalId, fileMapPath);
                 var template = "SentMessage.cshtml";
-                if (!emailsent) template = "SentErrMessage.cshtml";
-                var portalContent = new PortalContentLimpet(_portalId, _sessionParams.CultureCodeEdit); // Portal 0 is admin, editing portal setup
+                if (!emailsent && !_dataObject.ModuleSettings.DebugMode) template = "SentErrMessage.cshtml";
                 var razorTempl = _dataObject.AppTheme.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
                 if (razorTempl == "") razorTempl = _dataObject.AppThemeSystem.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
                 var pr = RenderRazorUtils.RazorProcessData(razorTempl, dRec, _dataObject.DataObjects, null, _sessionParams, true);
@@ -150,6 +160,21 @@ namespace RocketForms.API
                 LogUtils.LogSystem("Email Limit Exceeded: " + folderPath + "\\" + filename);
             }
             return "Invalid record";
+        }
+        public string PinForm()
+        {
+            var pinnumber = GeneralUtils.GetRandomKey(3, true);
+            _dataObject.SetSetting("formpin", pinnumber);
+            _postInfo.SetXmlProperty("genxml/hidden/pinnumber", pinnumber);
+            _postInfo.SetXmlProperty("genxml/hidden/formstart", _paramInfo.GetXmlPropertyDate("genxml/hidden/requeststart").ToString("O"));
+            _postInfo.SetXmlProperty("genxml/hidden/formend", _paramInfo.GetXmlPropertyDate("genxml/hidden/requestdone").ToString("O"));
+            DNNrocketUtils.SetTempStorage(_postInfo, "rocketforms_post_" + _sessionParams.BrowserSessionId);
+            var template = "PinForm.cshtml";
+            var razorTempl = _dataObject.AppTheme.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
+            if (razorTempl == "") razorTempl = _dataObject.AppThemeSystem.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
+            var pr = RenderRazorUtils.RazorProcessData(razorTempl, null, _dataObject.DataObjects, null, _sessionParams, true);
+            if (pr.StatusCode != "00") return pr.ErrorMsg;
+            return pr.RenderedText;
         }
         public SimplisityRecord ReadFileRecord(string fileMapPath)
         {

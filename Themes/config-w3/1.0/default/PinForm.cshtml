@@ -1,0 +1,26 @@
+﻿@inherits RocketForms.Components.RocketFormsTokens<Simplisity.SimplisityRazor>
+@using DNNrocketAPI.Components;
+@using Simplisity;
+@using RazorEngine.Text;
+@using RocketPortal.Components;
+@using RocketForms.Components;
+@AssigDataModel(Model)
+<!--inject-->
+
+
+<div class="rocketpinform">
+    <div class="w3-container w3-padding">
+        <div class="w3-card-4 w3-white w3-round-large" style="max-width: 400px; margin: 0 auto;">
+            <div class="w3-container w3-padding-large">
+                <h4 class="w3-text-grey w3-center">Security Verification</h4>               
+                <div class="w3-margin-top w3-margin-bottom w3-row">
+                        <label class="w3-text-grey">
+                        <input class="w3-check w3-margin-right simplisity_change " s-cmd="rocketforms_public2" @SFields("moduleid", moduleData.ModuleId.ToString()) s-return="#buttondiv@(moduleData.ModuleId)" s-cmdurl="/Desktopmodules/dnnrocket/api/rocket/action" type="checkbox" name="robotCheck" id="robotCheck" required>
+                            <span class="w3-text-dark-grey">I'm not a robot</span>
+                        </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

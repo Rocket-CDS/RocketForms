@@ -8,6 +8,14 @@
 		  <action>false</action>
 	  </command>
 	  <command>
+		  <cmd>rocketforms_public1</cmd>
+		  <action>false</action>
+	  </command>
+	  <command>
+		  <cmd>rocketforms_public2</cmd>
+		  <action>false</action>
+	  </command>
+	  <command>
 		  <cmd>rocketforms_edit</cmd>
 		  <action>true</action>
 	  </command>
