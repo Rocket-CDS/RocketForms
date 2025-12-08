@@ -163,7 +163,11 @@ namespace RocketForms.API
             {
                 var fileMapPath = folderPath + "\\" + filename;
                 FileUtils.SaveFile(fileMapPath, dataSave);
-                var emailsent = SendEmailForm(_portalId, fileMapPath);
+                var emailsent = true;
+                if (_dataObject.ModuleSettings.GetSetting("manageremail") != "")
+                {
+                    emailsent = SendEmailForm(_portalId, fileMapPath);
+                }
                 var template = "SentMessage.cshtml";
                 if (!emailsent && !_dataObject.ModuleSettings.DebugMode) template = "SentErrMessage.cshtml";
                 var razorTempl = _dataObject.AppTheme.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
