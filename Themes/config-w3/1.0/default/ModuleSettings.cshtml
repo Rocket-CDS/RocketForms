@@ -70,7 +70,16 @@
         <div class="w3-row w3-padding">
             <label class="w3-text-grey">@ResourceKey("RocketForms.emaillanguage")</label>
             @DropDownLanguageList(info, "genxml/settings/emaillanguage", " class='w3-input w3-border'")
-        </div>        
+        </div>
+
+        <div class="w3-row w3-padding">
+            <label class="w3-text-grey">Validation Assembly</label>
+            @TextBox(info, "genxml/settings/validationassembly", " class='w3-input w3-border'")
+        </div>
+        <div class="w3-row w3-padding">
+            <label class="w3-text-grey">Validation Namespace.Class</label>
+            @TextBox(info, "genxml/settings/validationnamespace", " class='w3-input w3-border'")
+        </div>
 
         <!-- Settings records are not localized, so use mulitple fields based on valid languages -->
         @foreach (var l in DNNrocketUtils.GetCultureCodeList())

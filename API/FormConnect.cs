@@ -1,8 +1,10 @@
-﻿using DNNrocketAPI.Components;
+﻿using DNNrocketAPI;
+using DNNrocketAPI.Components;
 using Rocket.AppThemes.Components;
 using RocketContentAPI.Components;
 using RocketForms.Components;
 using Simplisity;
+using Simplisity.TemplateEngine;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -86,13 +88,28 @@ namespace RocketForms.API
             var dRec = new SimplisityInfo();
             if (pinform)
             {
-                dRec = DNNrocketUtils.GetTempStorage("rocketforms_post_" + _sessionParams.BrowserSessionId, false);
-                //dRec = DNNrocketUtils.GetTempStorage("rocketforms_post_" + _sessionParams.BrowserSessionId, true);
 
-                dRec.SetXmlProperty("genxml/hidden/pinstart", _paramInfo.GetXmlPropertyDate("genxml/hidden/requeststart").ToString("O"));
-                dRec.SetXmlProperty("genxml/hidden/pinend", _paramInfo.GetXmlPropertyDate("genxml/hidden/requestdone").ToString("O"));
-
-                // [TODO: check for robot]
+                if (_dataObject.ModuleSettings.GetSetting("validationassembly") != "")
+                {
+                    try
+                    {
+                        var validateprov = RocketForms.Interfaces.Validate.GetInstance(_dataObject.ModuleSettings.GetSetting("validationassembly"), _dataObject.ModuleSettings.GetSetting("validationnamespace"));
+                        if (validateprov != null) dRec = validateprov.ValidatePin(_postInfo, _paramInfo);
+                        if (dRec == null)
+                        {
+                            var template = "InvalidMessage.cshtml";
+                            var razorTempl = _dataObject.AppTheme.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
+                            if (razorTempl == "") return "";
+                            var pr = RenderRazorUtils.RazorProcessData(razorTempl, dRec, _dataObject.DataObjects, null, _sessionParams, true);
+                            if (pr.StatusCode != "00") return pr.ErrorMsg;
+                            return pr.RenderedText;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        var err = ex.ToString();  // ignore event provider errors.  The error trap should be in the provider.
+                    }
+                }
             }
             else
                 dRec = (SimplisityInfo)_postInfo.CloneInfo();
@@ -163,18 +180,26 @@ namespace RocketForms.API
         }
         public string PinForm()
         {
-            var pinnumber = GeneralUtils.GetRandomKey(3, true);
-            _dataObject.SetSetting("formpin", pinnumber);
-            _postInfo.SetXmlProperty("genxml/hidden/pinnumber", pinnumber);
-            _postInfo.SetXmlProperty("genxml/hidden/formstart", _paramInfo.GetXmlPropertyDate("genxml/hidden/requeststart").ToString("O"));
-            _postInfo.SetXmlProperty("genxml/hidden/formend", _paramInfo.GetXmlPropertyDate("genxml/hidden/requestdone").ToString("O"));
-            DNNrocketUtils.SetTempStorage(_postInfo, "rocketforms_post_" + _sessionParams.BrowserSessionId);
-            var template = "PinForm.cshtml";
-            var razorTempl = _dataObject.AppTheme.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
-            if (razorTempl == "") razorTempl = _dataObject.AppThemeSystem.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
-            var pr = RenderRazorUtils.RazorProcessData(razorTempl, null, _dataObject.DataObjects, null, _sessionParams, true);
-            if (pr.StatusCode != "00") return pr.ErrorMsg;
-            return pr.RenderedText;
+            if (!String.IsNullOrEmpty(_sessionParams.BrowserSessionId))
+            {
+                var pinnumber = GeneralUtils.GetRandomKey(3, true);
+                _dataObject.SetSetting("formpin", pinnumber);
+                _postInfo.SetXmlProperty("genxml/hidden/pinnumber", pinnumber);
+
+                var validateprov = RocketForms.Interfaces.Validate.GetInstance(_dataObject.ModuleSettings.GetSetting("validationassembly"), _dataObject.ModuleSettings.GetSetting("validationnamespace"));
+                if (validateprov != null) _postInfo = validateprov.ValidateForm(_postInfo, _paramInfo);
+
+                var template = "PinForm.cshtml";
+                if (_postInfo == null) template = "InvalidMessage.cshtml";
+                var razorTempl = _dataObject.AppTheme.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
+                if (razorTempl == "") razorTempl = _dataObject.AppThemeSystem.GetTemplate(template, _dataObject.ModuleSettings.ModuleRef);
+                var pr = RenderRazorUtils.RazorProcessData(razorTempl, null, _dataObject.DataObjects, null, _sessionParams, true);
+
+
+                if (pr.StatusCode != "00") return pr.ErrorMsg;
+                return pr.RenderedText;
+            }
+            return "";
         }
         public SimplisityRecord ReadFileRecord(string fileMapPath)
         {
