@@ -26,7 +26,7 @@
     $( document ).ready(function() {
 
         setTimeout(function(){
-            var buttontext = '<div id="sendemail@(moduleData.ModuleId)" class="w3-button w3-theme-action w3-border @(buttoncolor) a-dovalidate simplisity_click" s-before="validateFom@(moduleData.ModuleId)" s-return="#buttondiv@(moduleData.ModuleId)"  s-cmdurl="/Desktopmodules/dnnrocket/api/rocket/action" s-cmd="rocketforms_publicpostform"  s-post="@(Model.GetSetting("spost"))" >@ResourceKey("RocketForms.send")</div>'
+            var buttontext = '<div id="sendemail@(moduleData.ModuleId)" class="isbutton w3-button w3-theme-action w3-border @(buttoncolor) a-dovalidate simplisity_click" s-before="validateFom@(moduleData.ModuleId)" s-return="#buttondiv@(moduleData.ModuleId)"  s-cmdurl="/Desktopmodules/dnnrocket/api/rocket/action" s-cmd="rocketforms_publicpostform"  s-post="@(Model.GetSetting("spost"))" >@ResourceKey("RocketForms.send")</div>'
             $('#buttondiv@(moduleData.ModuleId)').html(buttontext);
             $('@(Model.GetSetting("spost"))').activateSimplisityPanel();
         }, 1200);
