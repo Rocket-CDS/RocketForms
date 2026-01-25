@@ -14,6 +14,25 @@
 @{
     var moduleData = (ModuleFormsLimpet)Model.GetDataObject("modulesettings");
     var userParams = new UserParams("ModuleID:" + moduleData.ModuleId, true);
+    var appTheme = (AppThemeLimpet)Model.GetDataObject("apptheme");
+
+    var settingsTitle = ResourceKey("DNNrocket.settings").ToString();
+    var localTemplate = "";
+    if (appTheme != null)
+    {
+        var hasModuleTemplates = appTheme.HasModuleLevel(moduleData.ModuleRef);
+        var hasPortalTemplates = appTheme.HasPortalLevel();
+        if (hasPortalTemplates)
+        {
+            localTemplate = "background-color: palegoldenrod;";
+        }
+        if (hasModuleTemplates)
+        {
+            localTemplate = "background-color: lightblue;";
+        }
+        settingsTitle = appTheme.Name;
+    }
+
 }
 
 <style>
@@ -44,14 +63,21 @@
 
             if (UserUtils.IsSuperUser())
             {
-                <a href="@userParams.Get("appthemeurl")" class="viewedit-button " title="@ResourceKey("RCT.editapptheme")">
+                <a href="@userParams.Get("appthemeurl")" class="viewedit-button " style="@(localTemplate) background-color:light; " title="@ResourceKey("RCT.editapptheme")">
                     <img src="/DesktopModules/DNNrocket/API/images/movie_edit.svg" alt="@ResourceKey("RCT.editapptheme")" />
                 </a>
             }
 
         }
 
-        <span onclick="$('#a-editbuttons-@(moduleData.ModuleId)').hide();$('#a-editbuttons-@(moduleData.ModuleId)').addClass('w3-hide');" class="viewedit-button">
+        @{
+            var disbledCache = "";
+            if (moduleData.DisableCache)
+            {
+                disbledCache = " 	background-color:#FF6347; ";
+            }
+        }
+        <span onclick="$('#a-editbuttons-@(moduleData.ModuleId)').hide();$('#a-editbuttons-@(moduleData.ModuleId)').addClass('w3-hide');" style="@(disbledCache)" class="viewedit-button">
             <img src="/DesktopModules/DNNrocket/API/images/close.svg" alt="close" />
         </span>
 
