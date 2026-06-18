@@ -29,4 +29,12 @@
 		<value>RocketForms.dll</value>
     <value>RocketForms.pdb</value>
   </assembly>
+
+	<json>
+		<file>
+			<input>D:\NEVOWEB\Project\DesktopModules\DNNRocketModules\RocketForms\Render\RocketFormsTokens.cs</input>
+			<output>D:\NEVOWEB\Project\DesktopModules\DNNrocket\Documentation\razortokens\RocketFormsTokens.json</output>
+		</file>
+	</json>
+
 </root>

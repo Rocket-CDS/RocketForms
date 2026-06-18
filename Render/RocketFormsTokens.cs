@@ -38,6 +38,9 @@ namespace RocketForms.Components
             return "";
         }
 
+        /// <summary>
+        /// Assigns the data model for Razor, making the template easier to build by populating various data properties like appTheme, moduleData, portalData, etc., from the SimplisityRazor model.
+        /// </summary>
         public string AssignDataModel(SimplisityRazor sModel)
         {
             appTheme = (AppThemeLimpet)sModel.GetDataObject("apptheme");
@@ -73,6 +76,9 @@ namespace RocketForms.Components
         /// <param name="millisec"> time of delay until display</param>
         /// <param name="template">razor template</param>
         /// <returns>html for delayed display button</returns>
+        /// <summary>
+        /// Renders a form submission button that appears after a specified delay. This is a security measure to help prevent automated bot submissions. It renders a specified Razor template for the button's appearance.
+        /// </summary>
         public IEncodedString DelayFormButton(SimplisityRazor sModel, string spost, int millisec = 1200, string template = "DelayFormButton.cshtml")
         {
             sModel.SetSetting("spost", spost);
@@ -84,6 +90,9 @@ namespace RocketForms.Components
             if (pr.StatusCode != "00") return new RawString("DelayFormButton Razor Token.  : " + pr.ErrorMsg);
             return new RawString(pr.RenderedText);
         }
+        /// <summary>
+        /// Gets a localized resource string. It searches through a list of resource paths and file keys (including 'RocketForms' and theme-specific resx files) to find the requested key.
+        /// </summary>
         public string ResourceKey(AppThemeLimpet appTheme, String resourceKey, String lang = "", String resourceExtension = "Text")
         {
             var strOut = "";
@@ -119,6 +128,9 @@ namespace RocketForms.Components
         /// </summary>
         /// <param name="sModel"></param>
         /// <returns>The padding CSS for an inline style on an element.</returns>
+        /// <summary>
+        /// Generates an inline CSS padding style string based on module settings. It reads 'leftpadding', 'rightpadding', 'toppadding', and 'bottompadding' settings and creates corresponding CSS properties.
+        /// </summary>
         public string StylePadding()
         {
             var strOut = "";
