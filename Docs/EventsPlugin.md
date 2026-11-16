@@ -1,4 +1,4 @@
-# RocketForms Events Plugin
+﻿# RocketForms Events Plugin
 The RocketForms System can be extended by adding an events plugin.
 
 ## Create Plugin
@@ -44,7 +44,7 @@ Example:
 				<securityrolesadministrators>1</securityrolesadministrators>
 				<securityrolesmanager>0</securityrolesmanager>
 				<securityroleseditor>0</securityroleseditor>
-				<securityrolesclienteditor>0</securityrolesclienteditor>
+				<securityrolescollaborator>0</securityrolescollaborator>
 				<securityrolesregisteredusers>0</securityrolesregisteredusers>
 				<securityrolessubscribers>0</securityrolessubscribers>
 				<securityrolesall>0</securityrolesall>
